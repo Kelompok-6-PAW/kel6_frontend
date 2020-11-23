@@ -52,10 +52,10 @@ const router = new VueRouter({
     },
     //HOMEPAGE
     {
-        path: "/tambahnominal",
-        name: "tambahnominal",
-        meta: {title: 'Tambah Nominal Top Up'},
-        component: importComponent('TambahNominal'),
+        path: "/homepage",
+        name: "homepage",
+        meta: {title: 'Couponic'},
+        component: importComponent('Homepage'),
     },
     {
         path: '*',
