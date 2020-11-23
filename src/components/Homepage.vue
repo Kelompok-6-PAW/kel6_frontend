@@ -6,9 +6,9 @@
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto mr-7 font-weight-bold">
-                    <b-nav-item href="#">Tentang Kami</b-nav-item>
-                    <b-nav-item href="#">Daftar</b-nav-item>
-                    <b-nav-item href="#">Masuk</b-nav-item>
+                    <b-nav-item @click="dialog = true">Tentang Kami</b-nav-item>
+                    <b-nav-item @click="dialogRegister = true">Daftar</b-nav-item>
+                    <b-nav-item @click="dialog = true">Masuk</b-nav-item>
                 </b-navbar-nav>
                 </b-collapse>
             </b-navbar>
@@ -43,7 +43,101 @@
 
             </b-carousel>
         </div>
+        <v-dialog v-model="dialog" persistent max-width="600px">
+            <v-card>
+                <v-card-title>
+                    <span class="headline">Masuk di Couponic</span>
+                </v-card-title>
+                <v-card-text>
+                    <v-container>
+                        <v-text-field
+                        v-model="loginForm.email"
+                        :rules="emailRules"
+                        label="E-mail"
+                        required
+                        ></v-text-field>
 
+                        <v-text-field
+                        v-model="loginForm.password"
+                        label="Kata Sandi"
+                        required
+                        ></v-text-field>
+                    </v-container>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+
+                    <v-btn color="lime lighten-1" text @click="close">
+                        Batal
+                    </v-btn>
+                    <v-btn color="lime lighten-1" text @click="login">
+                        Masuk
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="dialogRegister" persistent max-width="600px">
+            <v-card>
+                <v-card-title>
+                    <span class="headline">Daftar di Couponic</span>
+                </v-card-title>
+                <v-card-text>
+                    <v-container>
+                        <v-text-field
+                        v-model="regisForm.email"
+                        :rules="emailRules"
+                        label="E-mail"
+                        required
+                        ></v-text-field>
+
+                        <v-text-field
+                        v-model="regisForm.password"
+                        label="Kata Sandi"
+                        required
+                        ></v-text-field>
+
+                        <v-text-field
+                        v-model="regisForm.username"
+                        label="Username"
+                        required
+                        ></v-text-field>
+
+                        <v-text-field
+                        v-model="regisForm.tanggalLahir"
+                        label="Tanggal Lahir"
+                        required
+                        ></v-text-field>
+
+                        <v-radio-group
+                        v-model="row"
+                        row
+                        >
+                        <v-radio
+                            label="Pria"
+                            value="pria"
+                        ></v-radio>
+                        <v-radio
+                            label="Wanita"
+                            value="wanita"
+                        ></v-radio>
+                        </v-radio-group>
+                    </v-container>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+
+                    <v-btn color="lime lighten-1" text @click="close">
+                        Batal
+                    </v-btn>
+                    <v-btn color="lime lighten-1" text @click="daftar">
+                        Daftar
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-main>
 </template>
 
@@ -61,6 +155,7 @@
                 sliding: null,
                 search: null,
                 dialog: false,
+                dialogRegister: false,
                 dialogConfirm: false,
                 pesanTopUp: new FormData,                             
                 form: {
@@ -70,8 +165,21 @@
                     harga: null,
                     pembayaran: null,                    
                 },
+                loginForm: {
+                    email:"",
+                    password:""
+                },
+                regisForm: {
+                    email:"",
+                    password:""
+                },
                 deleteId: '',
-                editId: ''
+                editId: '',
+
+                emailRules: [
+                    v => !!v || 'E-mail is required',
+                    v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+                ],
             };
         },
 
@@ -83,11 +191,12 @@
                     this.update()
                 }
             },
-            save() {
+            login() {
                 
             },
             close() {
                 this.dialog = false;
+                this.dialogRegister = false;
                 this.dialogConfirm = false;
                 this.inputType = 'Tambah';
             },
@@ -106,12 +215,12 @@
                     pembayaran: null,  
                 };
             },
-            onSlideStart(slide) {
+            /*onSlideStart(slide) {
                 this.sliding = true
             },
             onSlideEnd(slide) {
                 this.sliding = false
-            }               
+            } */              
         },
         computed: {
             formTitle() {
