@@ -1,6 +1,6 @@
 <template>
     <v-main class="list">
-        <h3 class="text-h3 font-weight-medium mb-5">Pesan Top Up</h3>
+        <h3 class="text-h3 font-weight-medium mb-5">Berlangganan Akun</h3>
 
         <v-card>
             <v-card-title>
@@ -19,7 +19,7 @@
                 </v-btn>
             </v-card-title>
 
-            <v-data-table :headers="headers" :items="pesanTopUps" :search="search">
+            <v-data-table :headers="headers" :items="berlangganans" :search="search">
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-btn small class="mr-2" @click="editHandler(item)">
                         edit
@@ -35,7 +35,7 @@
         <v-dialog v-model="dialog" persistent max-width="600px" >
             <v-card>
                 <v-card-title>
-                    <span class="headline">{{ formTitle }} Pesanan Top Up Game</span>
+                    <span class="headline">{{ formTitle }} Berlangganan Akun</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -45,23 +45,21 @@
                             required>
                         </v-text-field> -->
 
-                        <v-radio-group label="Active?" v-model="form.game">
+                        <v-radio-group label="Active?" v-model="form.aplikasi">
                             <v-radio name="active"  value="Mobile Legends">HA</v-radio>
                             <v-radio name="active"  value="Valorant"></v-radio>                
                         </v-radio-group>
 
                         <v-text-field
-                            v-model="form.userID"
-                            label="User ID"
+                            v-model="form.email"
+                            label="Email"
                             required>
                         </v-text-field>
                     
                         <v-select 
-                            v-model="form.nominal"
-                            :items="filteredSelect(form.game)"
-                            item-text="topup"
-                            item-value="topup"
-                            label="Nominal"                            
+                            v-model="form.jenisLangganan"
+                            :items="[]"                            
+                            label="Jenis Berlangganan"                            
                             required>
                         </v-select>
 
@@ -135,24 +133,24 @@
                 dialogConfirm: false,
                 headers: [
                     {
-                        text: "Game",
+                        text: "Aplikasi",
                         align: "start",
                         sortable: true,
-                        value: "game",
+                        value: "aplikasi",
                     },
-                    { text: "UserID", value: "userID" },
-                    { text: "Nominal", value: "nominal" },
+                    { text: "Email", value: "email" },
+                    { text: "Jenis Berlangganan", value: "jenisLangganan" },
                     { text: "Harga", value: "harga" },
                     { text: "Pembayaran", value: "pembayaran" },
                     { text: "Actions", value: "actions" },
                 ],
-                pesanTopUp: new FormData,
-                pesanTopUps: [],
-                nominalOptions: [],                                
+                berlangganan: new FormData,
+                berlangganans: [],
+                langgananOptions: [],                                
                 form: {
-                    game: null,
-                    userID: null,
-                    nominal: null,
+                    aplikasi: null,
+                    email: null,
+                    jenisLangganan: null,
                     harga: null,
                     pembayaran: null,                    
                 },
@@ -163,19 +161,11 @@
 
         methods: {
             readData() {
-                var url = this.$api + '/pesantopup'
+                var url = this.$api + '/berlangganan'
                 this.$http.get(url, {
                     
                 }).then(response => {
-                    this.pesanTopUps = response.data.data
-                })
-            },
-            readDataSelect() {
-                var url = this.$api + '/tambahnominal/'
-                this.$http.get(url, {
-                    
-                }).then(response => {                    
-                    this.nominalOptions = response.data.data                    
+                    this.berlangganans = response.data.data
                 })
             },
             setForm() {
@@ -186,17 +176,17 @@
                 }
             },
             save() {
-                this.pesanTopUp.append('game', this.form.game);
-                this.pesanTopUp.append('userID', this.form.userID);
-                this.pesanTopUp.append('nominal', this.form.nominal);
-                this.pesanTopUp.append('harga', this.form.harga);
-                this.pesanTopUp.append('pembayaran', this.form.pembayaran);
-                this.pesanTopUp.append('uname', "rastrk");
-                this.pesanTopUp.append('konfirmasi', 'Belum');
+                this.berlangganan.append('aplikasi', this.form.aplikasi);
+                this.berlangganan.append('email', this.form.email);
+                this.berlangganan.append('jenisLangganan', this.form.jenisLangganan);
+                this.berlangganan.append('harga', this.form.harga);
+                this.berlangganan.append('pembayaran', this.form.pembayaran);
+                this.berlangganan.append('uname', "rastrk");
+                this.berlangganan.append('konfirmasi', 'Belum');
 
-                var url = this.$api + '/pesantopup'
+                var url = this.$api + '/berlangganan'
                 this.load = true
-                this.$http.post(url, this.pesanTopUp, {
+                this.$http.post(url, this.berlangganan, {
                     // headers: {
                     //     'Authorization': 'Bearer ' + localStorage.getItem('token')
                     // }
@@ -217,13 +207,13 @@
             },
             update() {
                 let newData = {
-                    game: this.form.game,
-                    userID: this.form.userID,
-                    nominal: this.form.nominal,
+                    aplikasi: this.form.aplikasi,
+                    email: this.form.email,
+                    jenisLangganan: this.form.jenisLangganan,
                     harga: this.form.harga,
                     pembayaran: this.form.pembayaran,                    
                 }
-                var url = this.$api + '/pesantopup/' + this.editId;
+                var url = this.$api + '/berlangganan/' + this.editId;
                 this.load = true
                 this.$http.put(url, newData, {
                     // headers: {
@@ -246,7 +236,7 @@
                 })
             },
             deleteData() {
-                var url = this.$api + '/pesantopup/' + this.deleteId;
+                var url = this.$api + '/berlangganan/' + this.deleteId;
                 this.$http.delete(url, {
                     // headers: {
                     //     'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -270,9 +260,9 @@
             editHandler(item) {
                 this.inputType = 'Ubah';
                 this.editId = item.id;
-                this.form.game = item.game;
-                this.form.userID = item.userID;
-                this.form.nominal = item.nominal;
+                this.form.aplikasi = item.aplikasi;
+                this.form.email = item.email;
+                this.form.jenisLangganan = item.jenisLangganan;
                 this.form.harga = item.harga;
                 this.form.pembayaran = item.pembayaran;
                 this.dialog = true;
@@ -294,16 +284,13 @@
             },
             resetForm() {
                 this.form = {
-                    game: null,
-                    userID: null,
-                    nominal: null,
+                    aplikasi: null,
+                    email: null,
+                    jenisLangganan: null,
                     harga: null,
                     pembayaran: null,  
                 };
-            },
-            filteredSelect(tes){
-                return this.nominalOptions.filter(nominalOption => nominalOption.game === tes)
-            }                     
+            },                               
         },
         computed: {
             formTitle() {
@@ -312,7 +299,6 @@
         },
         mounted() {
             this.readData();
-            this.readDataSelect();
         },
     };
 </script>

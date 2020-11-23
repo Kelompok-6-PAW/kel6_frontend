@@ -36,7 +36,21 @@ const router = new VueRouter({
         meta: {title: 'Pesan Top Up'},
         component: importComponent('PesanTopUp'),
     },
+    //BERLANGGANAN
+    {
+        path: "/berlanggananakun",
+        name: "berlanggananakun",
+        meta: {title: 'Berlangganan Akun'},
+        component: importComponent('BerlanggananAkun'),
+    },
     //TAMBAHNOMINAL
+    {
+        path: "/tambahnominal",
+        name: "tambahnominal",
+        meta: {title: 'Tambah Nominal Top Up'},
+        component: importComponent('TambahNominal'),
+    },
+    //HOMEPAGE
     {
         path: "/tambahnominal",
         name: "tambahnominal",
