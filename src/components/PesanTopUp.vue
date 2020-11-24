@@ -1,7 +1,25 @@
 <template>
     <v-main class="list">
-        <h3 class="text-h3 font-weight-medium mb-5">Pesan Top Up</h3>
 
+        <div class="mb-8">
+            <b-navbar toggleable="lg" type="dark" class="napbar">
+                <b-navbar-brand href="#">Couponic</b-navbar-brand>
+                <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+                <b-collapse id="nav-collapse" is-nav>
+                <b-navbar-nav class="ml-auto mr-7 font-weight-medium">
+                    <b-nav-item >Top-Up Game</b-nav-item>
+                    <b-nav-item >Berlangganan Akun</b-nav-item>
+                    <b-nav-item >Tentang Kami</b-nav-item>
+                    <b-nav-item ><v-icon color="grey" class="ikon">mdi-account</v-icon></b-nav-item>
+                    <b-nav-item ><v-icon color="grey" class="ikon">mdi-logout</v-icon></b-nav-item>
+                </b-navbar-nav>
+                </b-collapse>
+            </b-navbar>
+        </div>
+
+        <h3 class="text-h3 font-weight-bold mb-5 judul">Top-Up Game</h3>
+
+    <div class="fullheight pa-6 px-15">
         <v-card>
             <v-card-title>
                 <v-text-field
@@ -14,8 +32,8 @@
 
                 <v-spacer></v-spacer>
 
-                <v-btn color="success" dark @click="dialog = true">
-                    Tambah
+                <v-btn color="primary" dark @click="dialog = true">
+                    Pesan Top-Up Game
                 </v-btn>
             </v-card-title>
 
@@ -31,28 +49,28 @@
             </v-data-table>
             
         </v-card>
+        </div>
 
-        <v-dialog v-model="dialog" persistent max-width="600px" >
+        <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card>
                 <v-card-title>
-                    <span class="headline">{{ formTitle }} Pesanan Top Up Game</span>
+                    <span class="headline font-weight-bold">{{ formTitle }} Pesanan Top-Up Game</span>
                 </v-card-title>
                 <v-card-text>
-                    <v-container>
-                        <!-- <v-text-field
-                            v-model="form.game"
-                            label="Game"
-                            required>
-                        </v-text-field> -->
+                    <v-container>                        
 
-                        <v-radio-group label="Active?" v-model="form.game">
-                            <v-radio name="active"  value="Mobile Legends">HA</v-radio>
-                            <v-radio name="active"  value="Valorant"></v-radio>                
-                        </v-radio-group>
+                        <vue-select-image class="mb-3"
+                            :h='80'
+                            :W='80'
+                            :useLabel=true 
+                            :dataImages="dataImages"
+                            @onselectimage="onSelectImage">
+                        </vue-select-image>
 
                         <v-text-field
                             v-model="form.userID"
                             label="User ID"
+                            outlined
                             required>
                         </v-text-field>
                     
@@ -61,13 +79,15 @@
                             :items="filteredSelect(form.game)"
                             item-text="topup"
                             item-value="topup"
-                            label="Nominal"                            
+                            label="Nominal" 
+                            outlined                           
                             required>
                         </v-select>
 
                         <v-text-field
                             v-model="form.harga"
                             label="Harga"
+                            outlined
                             required>
                         </v-text-field>
 
@@ -75,6 +95,7 @@
                             v-model="form.pembayaran"
                             :items="['OVO', 'GOPAY']"
                             label="Pembayaran"
+                            outlined
                             required>
                         </v-select>
 
@@ -83,11 +104,10 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-
-                    <v-btn color="blue darken-1" text @click="cancel">
+                    <v-btn color="red darken-1" outlined @click="cancel">
                         Batal
                     </v-btn>
-                    <v-btn color="blue darken-1" text @click="setForm">
+                    <v-btn color="blue darken-1" outlined @click="setForm">
                         Simpan
                     </v-btn>
                 </v-card-actions>
@@ -130,6 +150,19 @@
                 snackbar: false,
                 error_message: '',
                 color: '',
+                dataImages: [{
+                                id: '1',
+                                src: 'https://play-lh.googleusercontent.com/iuTt8Y9wzC3YCWgMGp_JcswmXGyG_t6XHDyPDv6ZLlGZQbEbeuLmSbZGD2DHwUB3ZAvY',
+                                alt: 'Mobile Legends'
+                                }, {
+                                id: '2',
+                                src: 'https://lh3.googleusercontent.com/nD3N4Lorg82wdrwqdf0SPjrUImwRT4ThOMU9L5ASGYQIcxJ9xvT-6xGPK6KzccxXlg',
+                                alt: 'PUBGM'
+                                }, {
+                                id: '3',
+                                src: 'https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com//kaleoz-store/202009/oss-37af9dc791b0866936cbd413950b3697.jpg',
+                                alt: 'Valorant',
+                            }],
                 search: null,
                 dialog: false,
                 dialogConfirm: false,
@@ -316,3 +349,12 @@
         },
     };
 </script>
+
+<style >
+    .napbar {
+        background-color: black;
+    }
+    .ikon :hover{
+        color: yellow;
+    }
+</style>

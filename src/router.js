@@ -10,53 +10,51 @@ Vue.use(VueRouter);
 const router = new VueRouter({
     mode: "history",
     routes: [{
-        path: "/",        
-        component: importComponent('Homepage'),
+        path: "/user",
+        name: "homepage",
+        meta: {title: 'Couponic'},        
+        component: importComponent('HomepageUser'),
         children: [
-            //Dashboard
+            //PESANTOPUP
             {
-                path: "/dashboard",
-                name: "Dahboard",
-                meta: {title: 'Dashboard'},
-                component: importComponent('Dashboard'),
+                path: "/pesantopup",
+                name: "pesantopup",
+                meta: {title: 'Pesan Top Up'},
+                component: importComponent('PesanTopUp'),
             },
-            //Products
+            //BERLANGGANAN
             {
-                path: "/products",
-                name: "Products",
-                meta: {title: 'Products'},
-                component: importComponent('DataMaster/Products'),
+                path: "/berlanggananakun",
+                name: "berlanggananakun",
+                meta: {title: 'Berlangganan Akun'},
+                component: importComponent('BerlanggananAkun'),
             },
         ]
     },
-    //PESANTOPUP
+    //ADMIN
+    {
+        path: "/admin",
+        name: "homepage",
+        meta: {title: 'Couponic'},        
+        component: importComponent('HomepageAdmin'),
+        children: [
+            //TAMBAHNOMINAL
+            {
+                path: "/tambahnominal",
+                name: "tambahnominal",
+                meta: {title: 'Tambah Nominal Top Up'},
+                component: importComponent('TambahNominal'),
+            },           
+        ]
+    },
+    // HOMEPAGELOGINREGISTER
     {
         path: "/",
-        name: "pesantopup",
-        meta: {title: 'Pesan Top Up'},
-        component: importComponent('PesanTopUp'),
-    },
-    //BERLANGGANAN
-    {
-        path: "/berlanggananakun",
-        name: "berlanggananakun",
-        meta: {title: 'Berlangganan Akun'},
-        component: importComponent('BerlanggananAkun'),
-    },
-    //TAMBAHNOMINAL
-    {
-        path: "/tambahnominal",
-        name: "tambahnominal",
-        meta: {title: 'Tambah Nominal Top Up'},
-        component: importComponent('TambahNominal'),
-    },
-    //HOMEPAGE
-    {
-        path: "/homepage",
         name: "homepage",
         meta: {title: 'Couponic'},
         component: importComponent('Homepage'),
     },
+
     {
         path: '*',
         redirect: '/'

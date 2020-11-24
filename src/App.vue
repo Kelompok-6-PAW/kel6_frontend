@@ -18,5 +18,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   background-color: #32B795;
+  color: #E2EA8D;
 }
+
+.judul{
+  text-shadow: 3px 2px 4px black;
+}
+
+
 </style>

@@ -5,7 +5,7 @@
                 <b-navbar-brand href="#">Couponic</b-navbar-brand>
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
-                <b-navbar-nav class="ml-auto mr-7 font-weight-bold">
+                <b-navbar-nav class="ml-auto mr-7 font-weight-medium">
                     <b-nav-item @click="dialog = true">Tentang Kami</b-nav-item>
                     <b-nav-item @click="dialogRegister = true">Daftar</b-nav-item>
                     <b-nav-item @click="dialog = true">Masuk</b-nav-item>
@@ -215,12 +215,12 @@
                     pembayaran: null,  
                 };
             },
-            /*onSlideStart(slide) {
+            onSlideStart(slide) {
                 this.sliding = true
             },
             onSlideEnd(slide) {
                 this.sliding = false
-            } */              
+            }              
         },
         computed: {
             formTitle() {

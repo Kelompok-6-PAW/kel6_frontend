@@ -6,6 +6,9 @@ import axios from 'axios'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import VueSelectImage from 'vue-select-image'
+Vue.use(VueSelectImage)
+require('vue-select-image/dist/vue-select-image.css')
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
