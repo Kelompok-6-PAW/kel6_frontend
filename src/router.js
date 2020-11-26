@@ -16,19 +16,19 @@ const router = new VueRouter({
         component: importComponent('HomepageUser'),
         children: [
             //PESANTOPUP
-            {
-                path: "/pesantopup",
-                name: "pesantopup",
-                meta: {title: 'Pesan Top Up'},
-                component: importComponent('PesanTopUp'),
-            },
+            // {
+            //     path: "/pesantopup",
+            //     name: "pesantopup",
+            //     meta: {title: 'Pesan Top Up'},
+            //     component: importComponent('PesanTopUp'),
+            // },
             //BERLANGGANAN
-            {
-                path: "/berlanggananakun",
-                name: "berlanggananakun",
-                meta: {title: 'Berlangganan Akun'},
-                component: importComponent('BerlanggananAkun'),
-            },
+            // {
+            //     path: "/berlanggananakun",
+            //     name: "berlanggananakun",
+            //     meta: {title: 'Berlangganan Akun'},
+            //     component: importComponent('BerlanggananAkun'),
+            // },
         ]
     },
     //ADMIN
@@ -46,6 +46,24 @@ const router = new VueRouter({
                 component: importComponent('TambahNominal'),
             },           
         ]
+    },
+    {
+        path: "/pesantopup",
+        name: "pesantopup",
+        meta: {title: 'Pesan Top Up'},
+        component: importComponent('PesanTopUp'),
+    },
+    {
+        path: "/berlanggananakun",
+        name: "berlanggananakun",
+        meta: {title: 'Berlangganan Akun'},
+        component: importComponent('BerlanggananAkun'),
+    },
+    {
+        path: "/profiluser",
+        name: "profiluser",
+        meta: {title: 'Profil'},
+        component: importComponent('EditUser'),
     },
     // HOMEPAGELOGINREGISTER
     {

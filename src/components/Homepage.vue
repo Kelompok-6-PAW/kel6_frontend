@@ -151,8 +151,6 @@
                 snackbar: false,
                 error_message: '',
                 color: '',
-                slide: 0,
-                sliding: null,
                 search: null,
                 dialog: false,
                 dialogRegister: false,
@@ -215,12 +213,7 @@
                     pembayaran: null,  
                 };
             },
-            onSlideStart(slide) {
-                this.sliding = true
-            },
-            onSlideEnd(slide) {
-                this.sliding = false
-            }              
+            
         },
         computed: {
             formTitle() {

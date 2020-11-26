@@ -49,7 +49,7 @@
             </v-data-table>
             
         </v-card>
-        </div>
+    </div>
 
         <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card>
