@@ -2,7 +2,7 @@
     <v-main class="list">
         <h3 class="text-h3 font-weight-medium mb-5">Tambah Nominal Top Up</h3>
 
-        <v-card>
+        <v-card >
             <v-card-title>
                 <v-text-field
                     v-model="search"
@@ -146,6 +146,7 @@
              readData() {
                 var url = this.$api + '/tambahnominal'
                 this.$http.get(url, {
+                    'Authorization' : 'Bearer ' + localStorage.getItem('token')
                     
                 }).then(response => {
                     this.tambahNominals = response.data.data
@@ -167,9 +168,9 @@
                 var url = this.$api + '/tambahnominal'
                 this.load = true
                 this.$http.post(url, this.tambahNominal, {
-                    // headers: {
-                    //     'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    // }
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
                 }).then(response => {
                     this.error_message = response.data.message;
                     this.color="green"

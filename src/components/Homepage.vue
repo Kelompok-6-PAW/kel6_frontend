@@ -138,6 +138,10 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <v-snackbar v-model="snackbar" :color="color" timeout="2000" bottom>
+            {{error_message}}
+        </v-snackbar>
+
     </v-main>
 </template>
 
@@ -191,6 +195,32 @@
             },
             login() {
                 
+                if (this.$refs.form.validate()) { //cek apakah data yang akan dikirim sudah valid
+
+                    this.load=true
+                    this.$http.post(this.$api+ '/homepage', {
+                        email: this.loginForm.email,
+                        password: this.loginform.password
+                        }).then(response =>{
+                            localStorage.setItem('id',response.data.user.id);
+                            localStorage.setItem('token',response.data.access_token);
+                            this.error_message=response.data.message;
+
+                            this.color="green"
+                            this.snackbar=true;
+                            this.load = false;
+                            this.resetForm();
+                            this.$router.push({
+                                name: 'HomepageUser'
+                            })
+                        }).catch(error => {
+                        this.error_message=error.response.data.message; 
+                        this.color="red" 
+                        this.snackbar=true;
+                        localStorage.removeItem('token')
+                        this.load = false
+                        })
+                }
             },
             close() {
                 this.dialog = false;
@@ -213,7 +243,15 @@
                     pembayaran: null,  
                 };
             },
+
             
+            onSlideStart(slide) {
+                this.sliding = true
+            },
+            onSlideEnd(slide) {
+                this.sliding = false
+            }              
+
         },
         computed: {
             formTitle() {

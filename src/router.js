@@ -44,7 +44,19 @@ const router = new VueRouter({
                 name: "tambahnominal",
                 meta: {title: 'Tambah Nominal Top Up'},
                 component: importComponent('TambahNominal'),
-            },           
+            },        
+            {
+                path: "/daftartransaksitopup",
+                name: "daftarTransaksiTopup",
+                meta: {title: 'Tambah Nominal Top Up'},
+                component: importComponent('DaftarTransaksiTopup'),
+            },
+            {
+                path: "/daftartransaksiberlangganan",
+                name: "daftartransaksi",
+                meta: {title: 'Tambah Nominal Top Up'},
+                component: importComponent('DaftarTransaksiBerlangganan'),
+            },   
         ]
     },
     {
