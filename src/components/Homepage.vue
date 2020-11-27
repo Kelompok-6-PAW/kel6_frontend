@@ -43,6 +43,8 @@
 
             </b-carousel>
         </div>
+
+        <!-- DIALOG LOGIN -->
         <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card>
                 <v-card-title>
@@ -50,7 +52,24 @@
                 </v-card-title>
                 <v-card-text>
                     <v-container>
-                        <v-text-field
+                        <v-form v-model="valid" ref="form">
+                            <v-text-field
+                                v-model="loginForm.email"
+                                :rules="emailRules"
+                                label="E-mail"
+                                required
+                            ></v-text-field>
+                            <v-text-field
+                                v-model="loginForm.password"
+                                label="Kata Sandi"
+                                required
+                            ></v-text-field>
+                            <!-- <v-layout justify-end>
+                                <v-btn class="mr-2" @click="submit()" :class="{ 'grey darken-1 white--text' : valid, disabled: !valid }">Go</v-btn>
+                                <v-btn @click="clear" class="grey darken-3 white--text">Clear</v-btn>
+                            </v-layout> -->
+                        </v-form>
+                        <!-- <v-text-field
                         v-model="loginForm.email"
                         :rules="emailRules"
                         label="E-mail"
@@ -61,7 +80,7 @@
                         v-model="loginForm.password"
                         label="Kata Sandi"
                         required
-                        ></v-text-field>
+                        ></v-text-field> -->
                     </v-container>
                 </v-card-text>
 
@@ -151,6 +170,8 @@
         data() {
             return {
                 inputType: 'Tambah',
+                onSlideStart: true,
+                onSlideEnd: false,
                 load: false,
                 snackbar: false,
                 error_message: '',
@@ -168,8 +189,8 @@
                     pembayaran: null,                    
                 },
                 loginForm: {
-                    email:"",
-                    password:""
+                    email:this.email,
+                    password:this.password,
                 },
                 regisForm: {
                     email:"",
@@ -196,11 +217,10 @@
             login() {
                 
                 if (this.$refs.form.validate()) { //cek apakah data yang akan dikirim sudah valid
-
                     this.load=true
-                    this.$http.post(this.$api+ '/homepage', {
+                    this.$http.post(this.$api+ '/login', {
                         email: this.loginForm.email,
-                        password: this.loginform.password
+                        password: this.loginForm.password,
                         }).then(response =>{
                             localStorage.setItem('id',response.data.user.id);
                             localStorage.setItem('token',response.data.access_token);
@@ -211,7 +231,7 @@
                             this.load = false;
                             this.resetForm();
                             this.$router.push({
-                                name: 'HomepageUser'
+                                name: 'homepageUser'
                             })
                         }).catch(error => {
                         this.error_message=error.response.data.message; 
