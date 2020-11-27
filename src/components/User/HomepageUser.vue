@@ -1,7 +1,7 @@
 <template>
     <v-main class="Home">
         <div>
-            <b-navbar  variant="dark" toggleable="lg" type="dark" class="napbar">
+            <b-navbar toggleable="lg" type="dark" class="napbar">
                 <b-navbar-brand href="#">Couponic</b-navbar-brand>
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
@@ -12,11 +12,11 @@
 
                     <!-- Nanti dibikin profile pake logo sama ada username penggunanya kalo bisa wkwkw-->
                     <b-nav-item href="/profiluser">
-                        <v-icon>mdi-account-box</v-icon> 
+                        <v-icon color="#E2EA8D">mdi-account-circle</v-icon> 
                         <!-- <b-nav-text> {{ user.nama }} -->
         
                     </b-nav-item>
-                    <b-nav-item @click="logout"><v-icon  >mdi-logout</v-icon></b-nav-item>
+                    <b-nav-item @click="logout"><v-icon color="#E2EA8D" >mdi-logout</v-icon></b-nav-item>
                 </b-navbar-nav>
                 </b-collapse>
             </b-navbar>
@@ -45,6 +45,7 @@ export default {
 
             
             ],
+            
         }; 
     },
     methods:{
@@ -80,7 +81,7 @@ export default {
         color:black;
     }
     .napbar{
-         color:black;
+         background-color:black;
 
     }
 

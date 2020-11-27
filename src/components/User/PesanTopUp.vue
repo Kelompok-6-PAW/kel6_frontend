@@ -24,15 +24,17 @@
 
             <v-data-table :headers="headers" :items="pesanTopUps" :search="search">
                 <template v-slot:[`item.actions`]="{ item }">
-                    <v-btn small class="mr-2" @click="editHandler(item)">
-                        edit
+                    <v-btn color="#ff9a76" small class="mr-2" @click="editHandler(item)">
+                        <v-icon color="white">mdi-pencil-circle</v-icon> 
                     </v-btn>
-                    <v-btn small @click="deleteHandler(item.id)">
-                        delete
+                    <v-btn color="#ec5858" small class="mr-2" @click="deleteHandler(item.id)">
+                        <v-icon color="white">mdi-close-circle</v-icon> 
+                    </v-btn>
+                    <v-btn color="#679b9b" small @click="deleteHandler(item.id)">
+                        <v-icon color="white">mdi-check-circle</v-icon> 
                     </v-btn>
                 </template>
-            </v-data-table>
-            
+            </v-data-table>            
         </v-card>
     </div>
 
@@ -49,9 +51,8 @@
                             :W='80'
                             :useLabel=true 
                             :dataImages="dataImages"
-                            @onselectimage="dataImages"
-                            v-bind="dataImages.value"
-                            v-model="form.game"
+                            @onselectimage="onSelectImage" 
+                            ref="single-select-image"                           
                             >
                         </vue-select-image>
 
@@ -64,8 +65,9 @@
                     
                         <v-select 
                             v-model="form.nominal"
-                            :items="nominalOptions"
-                            v-bind:value="nominalOptions.value"
+                            :items="filteredSelect(form.game)"
+                            item-text="topup"
+                            item-value="topup"
                             label="Nominal" 
                             outlined                           
                             required>
@@ -136,22 +138,19 @@
                 load: false,
                 snackbar: false,
                 error_message: '',
-                color: '',
+                color: '',               
                 dataImages: [{
                                 id: '1',
                                 src: 'https://play-lh.googleusercontent.com/iuTt8Y9wzC3YCWgMGp_JcswmXGyG_t6XHDyPDv6ZLlGZQbEbeuLmSbZGD2DHwUB3ZAvY',
-                                alt: 'Mobile Legends',
-                                value:'Mobile Legends'
+                                alt: 'Mobile Legends',                                
                                 }, {
                                 id: '2',
                                 src: 'https://lh3.googleusercontent.com/nD3N4Lorg82wdrwqdf0SPjrUImwRT4ThOMU9L5ASGYQIcxJ9xvT-6xGPK6KzccxXlg',
-                                alt: 'PUBGM',
-                                value: 'PUBGM'
+                                alt: 'PUBGM',                                
                                 }, {
                                 id: '3',
                                 src: 'https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com//kaleoz-store/202009/oss-37af9dc791b0866936cbd413950b3697.jpg',
-                                alt: 'Valorant',
-                                value: 'Valorant'
+                                alt: 'Valorant',                                
                             }],
                 search: null,
                 dialog: false,
@@ -171,10 +170,7 @@
                 ],
                 pesanTopUp: new FormData,
                 pesanTopUps: [],
-                nominalOptions: [
-                    {text:'20 Diamonds' , value:'20 Diamonds'},
-                ],
-                game:"",                                
+                nominalOptions: [],                                              
                 form: {
                     game: null,
                     userID: null,
@@ -201,7 +197,9 @@
             readDataSelect() {
                 var url = this.$api + '/tambahnominal/'
                 this.$http.get(url, {
-                    
+                     headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
                 }).then(response => {                    
                     this.nominalOptions = response.data.data                    
                 })
@@ -328,10 +326,15 @@
                     harga: null,
                     pembayaran: null,  
                 };
+                this.$refs['single-select-image'].removeFromSingleSelected()
             },
             filteredSelect(tes){
                 return this.nominalOptions.filter(nominalOption => nominalOption.game === tes)
-            }                     
+            },
+            onSelectImage: function (data) {
+                console.log('fire event onSelectImage: ', data)
+                this.form.game = data.alt
+            },           
         },
         computed: {
             formTitle() {
@@ -345,11 +348,3 @@
     };
 </script>
 
-<style >
-    .napbar {
-        background-color: black;
-    }
-    .ikon :hover{
-        color: yellow;
-    }
-</style>

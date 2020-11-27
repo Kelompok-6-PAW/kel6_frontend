@@ -1,7 +1,7 @@
 <template>
     <v-main class="Home">
         <div>
-            <b-navbar  variant="dark" toggleable="lg" type="dark" class="napbar">
+            <b-navbar toggleable="lg" type="dark" class="napbar">
                 <b-navbar-brand href="#">Couponic</b-navbar-brand>
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
@@ -10,11 +10,11 @@
                     <b-nav-item href="/daftartransaksitopup">Daftar Transaksi Topup</b-nav-item>
                     <b-nav-item href="/daftartransaksiberlangganan">Daftar Transaksi Berlangganan</b-nav-item>
                     <b-nav-item href="/profiluser">
-                        <v-icon>mdi-account-box</v-icon> 
+                        <v-icon color="#E2EA8D">mdi-account-circle</v-icon>
                         <!-- <b-nav-text> {{ user.nama }} -->
         
                     </b-nav-item>
-                    <b-nav-item @click="logout"><v-icon  >mdi-logout</v-icon></b-nav-item>
+                    <b-nav-item @click="logout"><v-icon color="#E2EA8D" >mdi-logout</v-icon></b-nav-item>
                 </b-navbar-nav>
                 </b-collapse>
             </b-navbar>
@@ -60,17 +60,14 @@ export default {
         
         };
 </script> 
-<style scoped>
-    .fullheight {
-    min-height: 100vh !important; }
+<style>  
 
     .router{
         text-decoration: none;
         color:black;
     }
     .napbar{
-         color:black;
-
+         background-color: black;
     }
 
 </style>

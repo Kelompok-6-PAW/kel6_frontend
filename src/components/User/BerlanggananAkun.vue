@@ -25,11 +25,14 @@
 
             <v-data-table :headers="headers" :items="berlangganans" :search="search">
                 <template v-slot:[`item.actions`]="{ item }">
-                    <v-btn small class="mr-2" @click="editHandler(item)">
-                        edit
+                    <v-btn color="#ff9a76" small class="mr-2" @click="editHandler(item)">
+                        <v-icon color="white">mdi-pencil-circle</v-icon> 
                     </v-btn>
-                    <v-btn small @click="deleteHandler(item.id)">
-                        delete
+                    <v-btn color="#ec5858" small class="mr-2" @click="deleteHandler(item.id)">
+                        <v-icon color="white">mdi-close-circle</v-icon> 
+                    </v-btn>
+                    <v-btn color="#679b9b" small @click="deleteHandler(item.id)">
+                        <v-icon color="white">mdi-check-circle</v-icon> 
                     </v-btn>
                 </template>
             </v-data-table>
@@ -50,7 +53,8 @@
                             :W='80'
                             :useLabel=true 
                             :dataImages="dataImages"
-                            @onselectimage="onSelectImage">
+                            @onselectimage="onSelectImage"
+                            ref="single-select-image">
                         </vue-select-image>
 
                         <v-text-field
@@ -313,7 +317,12 @@
                     harga: null,
                     pembayaran: null,  
                 };
-            },                               
+                this.$refs['single-select-image'].removeFromSingleSelected()
+            },
+            onSelectImage: function (data) {
+                console.log('fire event onSelectImage: ', data)
+                this.form.game = data.alt
+            },                                   
         },
         computed: {
             formTitle() {
