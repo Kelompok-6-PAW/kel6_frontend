@@ -13,31 +13,31 @@ const router = new VueRouter({
         path: "/user",
         name: "homepageUser",
         meta: {title: 'Couponic'},        
-        component: importComponent('HomepageUser'),
+        component: importComponent('User/HomepageUser'),
         children: [
             {
                 path: "/pesantopup",
                 name: "pesantopup",
                 meta: {title: 'Pesan Top Up'},
-                component: importComponent('PesanTopUp'),
+                component: importComponent('User/PesanTopUp'),
             },
             {
                 path: "/berlanggananakun",
                 name: "berlanggananakun",
                 meta: {title: 'Berlangganan Akun'},
-                component: importComponent('BerlanggananAkun'),
+                component: importComponent('User/BerlanggananAkun'),
             },
             {
                 path: "/profiluser",
                 name: "profiluser",
                 meta: {title: 'Profil'},
-                component: importComponent('EditUser'),
+                component: importComponent('User/EditUser'),
             },
             {
                 path: "/tentangkami",
                 name: "tentangkami",
                 meta: {title: 'Tentang Kami'},
-                component: importComponent('TentangKami'),
+                component: importComponent('User/TentangKami'),
             },
         ]
     },
@@ -46,26 +46,26 @@ const router = new VueRouter({
         path: "/admin",
         name: "homepageAdmin",
         meta: {title: 'Couponic'},        
-        component: importComponent('HomepageAdmin'),
+        component: importComponent('Admin/HomepageAdmin'),
         children: [
             //TAMBAHNOMINAL
             {
                 path: "/tambahnominal",
                 name: "tambahnominal",
                 meta: {title: 'Tambah Nominal Top Up'},
-                component: importComponent('TambahNominal'),
+                component: importComponent('Admin/TambahNominal'),
             },        
             {
                 path: "/daftartransaksitopup",
                 name: "daftarTransaksiTopup",
                 meta: {title: 'Tambah Nominal Top Up'},
-                component: importComponent('DaftarTransaksiTopup'),
+                component: importComponent('Admin/DaftarTransaksiTopup'),
             },
             {
                 path: "/daftartransaksiberlangganan",
                 name: "daftartransaksi",
                 meta: {title: 'Tambah Nominal Top Up'},
-                component: importComponent('DaftarTransaksiBerlangganan'),
+                component: importComponent('Admin/DaftarTransaksiBerlangganan'),
             },   
         ]
     },

@@ -62,7 +62,7 @@
                     
                         <v-select 
                             v-model="form.jenisLangganan"
-                            :items="[]"                            
+                            :items="langgananOptions"                            
                             label="Jenis Berlangganan"
                             outlined                            
                             required>
@@ -162,7 +162,12 @@
                 ],
                 berlangganan: new FormData,
                 berlangganans: [],
-                langgananOptions: [],                                
+                langgananOptions: [
+                    {text:'1 Bulan' , value:'1 Bulan'},
+                    {text:'3 Bulan' , value:'3 Bulan'},
+                    {text:'6 Bulan' , value:'6 Bulan'},
+                    {text:'1 Tahun' , value:'1 Tahun'},
+                ],                                
                 form: {
                     aplikasi: null,
                     email: null,
@@ -179,7 +184,9 @@
             readData() {
                 var url = this.$api + '/berlangganan'
                 this.$http.get(url, {
-                    
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
                 }).then(response => {
                     this.berlangganans = response.data.data
                 })
@@ -203,9 +210,9 @@
                 var url = this.$api + '/berlangganan'
                 this.load = true
                 this.$http.post(url, this.berlangganan, {
-                    // headers: {
-                    //     'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    // }
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
                 }).then(response => {
                     this.error_message = response.data.message;
                     this.color="green"
@@ -232,9 +239,9 @@
                 var url = this.$api + '/berlangganan/' + this.editId;
                 this.load = true
                 this.$http.put(url, newData, {
-                    // headers: {
-                    //     'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    // }
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
                 }).then(response => {
                     this.error_message = response.data.message;
                     this.color="green"
@@ -254,9 +261,9 @@
             deleteData() {
                 var url = this.$api + '/berlangganan/' + this.deleteId;
                 this.$http.delete(url, {
-                    // headers: {
-                    //     'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    // }
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
                 }).then(response => {
                     this.error_message = response.data.message;
                     this.color="green"

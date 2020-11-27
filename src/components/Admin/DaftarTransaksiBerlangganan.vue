@@ -71,8 +71,9 @@
              readData() {
                 var url = this.$api + '/berlangganan'
                 this.$http.get(url, {
-                    'Authorization' : 'Bearer ' + localStorage.getItem('token')
-                    
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
                 }).then(response => {
                     this.berlangganans = response.data.data
                 })

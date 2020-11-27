@@ -1,8 +1,11 @@
 <template>
     <v-main class="list">
-        <h3 class="text-h3 font-weight-medium mb-5">Tambah Nominal Top Up</h3>
 
-        <v-card >
+        
+        <h3 class="text-h3 font-weight-bold mb-5 judul">Top-Up Game</h3>
+
+    <div class="fullheight pa-6 px-15">
+        <v-card>
             <v-card-title>
                 <v-text-field
                     v-model="search"
@@ -14,12 +17,12 @@
 
                 <v-spacer></v-spacer>
 
-                <v-btn color="success" dark @click="dialog = true">
-                    Tambah
+                <v-btn color="primary" dark @click="dialog = true">
+                    Pesan Top-Up Game
                 </v-btn>
             </v-card-title>
 
-            <v-data-table :headers="headers" :items="tambahNominals" :search="search">
+            <v-data-table :headers="headers" :items="pesanTopUps" :search="search">
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-btn small class="mr-2" @click="editHandler(item)">
                         edit
@@ -29,49 +32,69 @@
                     </v-btn>
                 </template>
             </v-data-table>
+            
         </v-card>
+    </div>
 
         <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card>
                 <v-card-title>
-                    <span class="headline">{{ formTitle }} Nominal Top Up Game</span>
+                    <span class="headline font-weight-bold">{{ formTitle }} Pesanan Top-Up Game</span>
                 </v-card-title>
                 <v-card-text>
-                    <v-container>
-                        <v-text-field
+                    <v-container>                        
+
+                        <vue-select-image class="mb-3"
+                            :h='80'
+                            :W='80'
+                            :useLabel=true 
+                            :dataImages="dataImages"
+                            @onselectimage="dataImages"
+                            v-bind="dataImages.value"
                             v-model="form.game"
-                            label="Game"
-                            required>
-                        </v-text-field>
+                            >
+                        </vue-select-image>
 
                         <v-text-field
-                            v-model="form.topup"
-                            label="Top Up"
+                            v-model="form.userID"
+                            label="User ID"
+                            outlined
                             required>
                         </v-text-field>
+                    
+                        <v-select 
+                            v-model="form.nominal"
+                            :items="nominalOptions"
+                            v-bind:value="nominalOptions.value"
+                            label="Nominal" 
+                            outlined                           
+                            required>
+                        </v-select>
 
                         <v-text-field
                             v-model="form.harga"
                             label="Harga"
+                            outlined
                             required>
                         </v-text-field>
 
-                        <v-text-field
-                            v-model="form.stok"
-                            label="Stok"
+                        <v-select
+                            v-model="form.pembayaran"
+                            :items="['OVO', 'GOPAY']"
+                            label="Pembayaran"
+                            outlined
                             required>
-                        </v-text-field>
+                        </v-select>
 
                     </v-container>
                 </v-card-text>
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-
-                    <v-btn color="blue darken-1" text @click="cancel">
+                    <v-btn color="red darken-1" outlined @click="cancel">
                         Batal
                     </v-btn>
-                    <v-btn color="blue darken-1" text @click="setForm">
+                    <v-btn color="blue darken-1" outlined @click="setForm">
                         Simpan
                     </v-btn>
                 </v-card-actions>
@@ -114,6 +137,22 @@
                 snackbar: false,
                 error_message: '',
                 color: '',
+                dataImages: [{
+                                id: '1',
+                                src: 'https://play-lh.googleusercontent.com/iuTt8Y9wzC3YCWgMGp_JcswmXGyG_t6XHDyPDv6ZLlGZQbEbeuLmSbZGD2DHwUB3ZAvY',
+                                alt: 'Mobile Legends',
+                                value:'Mobile Legends'
+                                }, {
+                                id: '2',
+                                src: 'https://lh3.googleusercontent.com/nD3N4Lorg82wdrwqdf0SPjrUImwRT4ThOMU9L5ASGYQIcxJ9xvT-6xGPK6KzccxXlg',
+                                alt: 'PUBGM',
+                                value: 'PUBGM'
+                                }, {
+                                id: '3',
+                                src: 'https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com//kaleoz-store/202009/oss-37af9dc791b0866936cbd413950b3697.jpg',
+                                alt: 'Valorant',
+                                value: 'Valorant'
+                            }],
                 search: null,
                 dialog: false,
                 dialogConfirm: false,
@@ -124,18 +163,24 @@
                         sortable: true,
                         value: "game",
                     },
-                    { text: "Top Up", value: "topup" },                    
+                    { text: "UserID", value: "userID" },
+                    { text: "Nominal", value: "nominal" },
                     { text: "Harga", value: "harga" },
-                    { text: "Stok", value: "stok" },
+                    { text: "Pembayaran", value: "pembayaran" },
                     { text: "Actions", value: "actions" },
                 ],
-                tambahNominal: new FormData,
-                tambahNominals: [],
+                pesanTopUp: new FormData,
+                pesanTopUps: [],
+                nominalOptions: [
+                    {text:'20 Diamonds' , value:'20 Diamonds'},
+                ],
+                game:"",                                
                 form: {
                     game: null,
-                    topup: null,                    
+                    userID: null,
+                    nominal: null,
                     harga: null,
-                    stok: null,                    
+                    pembayaran: null,                    
                 },
                 deleteId: '',
                 editId: ''
@@ -143,13 +188,22 @@
         },
 
         methods: {
-             readData() {
-                var url = this.$api + '/tambahnominal'
+            readData() {
+                var url = this.$api + '/pesantopup'
                 this.$http.get(url, {
-                    'Authorization' : 'Bearer ' + localStorage.getItem('token')
-                    
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
                 }).then(response => {
-                    this.tambahNominals = response.data.data
+                    this.pesanTopUps = response.data.data
+                })
+            },
+            readDataSelect() {
+                var url = this.$api + '/tambahnominal/'
+                this.$http.get(url, {
+                    
+                }).then(response => {                    
+                    this.nominalOptions = response.data.data                    
                 })
             },
             setForm() {
@@ -160,14 +214,17 @@
                 }
             },
             save() {
-                this.tambahNominal.append('game', this.form.game);
-                this.tambahNominal.append('topup', this.form.topup);                
-                this.tambahNominal.append('harga', this.form.harga);
-                this.tambahNominal.append('stok', this.form.stok);                
+                this.pesanTopUp.append('game', this.form.game);
+                this.pesanTopUp.append('userID', this.form.userID);
+                this.pesanTopUp.append('nominal', this.form.nominal);
+                this.pesanTopUp.append('harga', this.form.harga);
+                this.pesanTopUp.append('pembayaran', this.form.pembayaran);
+                this.pesanTopUp.append('uname', "rastrk");
+                this.pesanTopUp.append('konfirmasi', 'Belum');
 
-                var url = this.$api + '/tambahnominal'
+                var url = this.$api + '/pesantopup'
                 this.load = true
-                this.$http.post(url, this.tambahNominal, {
+                this.$http.post(url, this.pesanTopUp, {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
                     }
@@ -189,16 +246,17 @@
             update() {
                 let newData = {
                     game: this.form.game,
-                    topup: this.form.topup,                    
+                    userID: this.form.userID,
+                    nominal: this.form.nominal,
                     harga: this.form.harga,
-                    stok: this.form.stok,                    
+                    pembayaran: this.form.pembayaran,                    
                 }
-                var url = this.$api + '/tambahnominal/' + this.editId;
+                var url = this.$api + '/pesantopup/' + this.editId;
                 this.load = true
                 this.$http.put(url, newData, {
-                    // headers: {
-                    //     'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    // }
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
                 }).then(response => {
                     this.error_message = response.data.message;
                     this.color="green"
@@ -216,11 +274,11 @@
                 })
             },
             deleteData() {
-                var url = this.$api + '/tambahnominal/' + this.deleteId;
+                var url = this.$api + '/pesantopup/' + this.deleteId;
                 this.$http.delete(url, {
-                    // headers: {
-                    //     'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    // }
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
                 }).then(response => {
                     this.error_message = response.data.message;
                     this.color="green"
@@ -241,9 +299,10 @@
                 this.inputType = 'Ubah';
                 this.editId = item.id;
                 this.form.game = item.game;
-                this.form.topup = item.topup;                
+                this.form.userID = item.userID;
+                this.form.nominal = item.nominal;
                 this.form.harga = item.harga;
-                this.form.stok = item.stok;
+                this.form.pembayaran = item.pembayaran;
                 this.dialog = true;
             },
             deleteHandler(id) {
@@ -264,19 +323,33 @@
             resetForm() {
                 this.form = {
                     game: null,
-                    topup: null,                    
+                    userID: null,
+                    nominal: null,
                     harga: null,
-                    stok: null, 
+                    pembayaran: null,  
                 };
-            },            
+            },
+            filteredSelect(tes){
+                return this.nominalOptions.filter(nominalOption => nominalOption.game === tes)
+            }                     
         },
         computed: {
             formTitle() {
                 return this.inputType
-            },
+            },            
         },
         mounted() {
             this.readData();
+            this.readDataSelect();
         },
     };
 </script>
+
+<style >
+    .napbar {
+        background-color: black;
+    }
+    .ikon :hover{
+        color: yellow;
+    }
+</style>

@@ -19,7 +19,7 @@
                 </v-btn>
             </v-card-title>
 
-            <v-data-table :headers="headers" :items="pesantopups" :search="search">
+            <v-data-table :headers="headers" :items="pesanTopUps" :search="search">
                 
             </v-data-table>
         </v-card>
@@ -54,32 +54,32 @@
                     { text: "Pembayaran", value: "Pembayaran" },
                     { text: "Username", value: "Username" },
                     { text: "Konfirmasi", value: "Konfirmasi" },
-                ],               
-                pesantopups: [],
-                // form: {
-                //     game: null,
-                //     topup: null,                    
-                //     harga: null,
-                //     stok: null,                    
-                // },
+                ],              
+                pesanTopUps: [],
+                form: {
+                    game: null,
+                    topup: null,                    
+                    harga: null,
+                    stok: null,                    
+                },
                 deleteId: '',
                 editId: ''
             };
         },
 
         methods: {
-             readData() {
+            readData() {
                 var url = this.$api + '/pesantopup'
                 this.$http.get(url, {
-                    'Authorization' : 'Bearer ' + localStorage.getItem('token')
-                    
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
                 }).then(response => {
-                    this.pesantopups = response.data.data
+                    this.pesanTopUps = response.data.data
                 })
             },
                       
         },
-        
         mounted() {
             this.readData();
         },

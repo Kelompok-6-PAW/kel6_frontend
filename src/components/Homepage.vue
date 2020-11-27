@@ -230,9 +230,15 @@
                             this.snackbar=true;
                             this.load = false;
                             this.resetForm();
-                            this.$router.push({
-                                name: 'homepageUser'
-                            })
+                            if(this.loginForm.email == 'tubespaw6@admin.com'){
+                                this.$router.push({
+                                name: 'homepageAdmin'
+                                })
+                            }else{
+                                this.$router.push({
+                                    name: 'homepageUser'
+                                })
+                            }
                         }).catch(error => {
                         this.error_message=error.response.data.message; 
                         this.color="red" 
