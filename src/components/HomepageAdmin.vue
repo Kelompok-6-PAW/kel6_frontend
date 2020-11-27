@@ -9,6 +9,11 @@
                     <b-nav-item href="/tambahnominal">Daftar Nominal Top up</b-nav-item>
                     <b-nav-item href="/daftartransaksitopup">Daftar Transaksi Topup</b-nav-item>
                     <b-nav-item href="/daftartransaksiberlangganan">Daftar Transaksi Berlangganan</b-nav-item>
+                    <b-nav-item href="/profiluser">
+                        <v-icon>mdi-account-box</v-icon> 
+                        <!-- <b-nav-text> {{ user.nama }} -->
+        
+                    </b-nav-item>
                     <b-nav-item @click="logout"><v-icon  >mdi-logout</v-icon></b-nav-item>
                 </b-navbar-nav>
                 </b-collapse>

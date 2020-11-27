@@ -1,22 +1,7 @@
 <template>
     <v-main class="list">
 
-        <div class="mb-8">
-            <b-navbar toggleable="lg" type="dark" class="napbar">
-                <b-navbar-brand href="#">Couponic</b-navbar-brand>
-                <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-                <b-collapse id="nav-collapse" is-nav>
-                <b-navbar-nav class="ml-auto mr-7 font-weight-medium">
-                    <b-nav-item >Top-Up Game</b-nav-item>
-                    <b-nav-item >Berlangganan Akun</b-nav-item>
-                    <b-nav-item >Tentang Kami</b-nav-item>
-                    <b-nav-item ><v-icon color="grey" class="ikon">mdi-account</v-icon></b-nav-item>
-                    <b-nav-item ><v-icon color="grey" class="ikon">mdi-logout</v-icon></b-nav-item>
-                </b-navbar-nav>
-                </b-collapse>
-            </b-navbar>
-        </div>
-
+        
         <h3 class="text-h3 font-weight-bold mb-5 judul">Top-Up Game</h3>
 
     <div class="fullheight pa-6 px-15">

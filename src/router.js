@@ -11,30 +11,40 @@ const router = new VueRouter({
     mode: "history",
     routes: [{
         path: "/user",
-        name: "homepage",
+        name: "homepageUser",
         meta: {title: 'Couponic'},        
         component: importComponent('HomepageUser'),
         children: [
-            //PESANTOPUP
-            // {
-            //     path: "/pesantopup",
-            //     name: "pesantopup",
-            //     meta: {title: 'Pesan Top Up'},
-            //     component: importComponent('PesanTopUp'),
-            // },
-            //BERLANGGANAN
-            // {
-            //     path: "/berlanggananakun",
-            //     name: "berlanggananakun",
-            //     meta: {title: 'Berlangganan Akun'},
-            //     component: importComponent('BerlanggananAkun'),
-            // },
+            {
+                path: "/pesantopup",
+                name: "pesantopup",
+                meta: {title: 'Pesan Top Up'},
+                component: importComponent('PesanTopUp'),
+            },
+            {
+                path: "/berlanggananakun",
+                name: "berlanggananakun",
+                meta: {title: 'Berlangganan Akun'},
+                component: importComponent('BerlanggananAkun'),
+            },
+            {
+                path: "/profiluser",
+                name: "profiluser",
+                meta: {title: 'Profil'},
+                component: importComponent('EditUser'),
+            },
+            {
+                path: "/tentangkami",
+                name: "tentangkami",
+                meta: {title: 'Tentang Kami'},
+                component: importComponent('TentangKami'),
+            },
         ]
     },
     //ADMIN
     {
         path: "/admin",
-        name: "homepage",
+        name: "homepageAdmin",
         meta: {title: 'Couponic'},        
         component: importComponent('HomepageAdmin'),
         children: [
@@ -59,24 +69,7 @@ const router = new VueRouter({
             },   
         ]
     },
-    {
-        path: "/pesantopup",
-        name: "pesantopup",
-        meta: {title: 'Pesan Top Up'},
-        component: importComponent('PesanTopUp'),
-    },
-    {
-        path: "/berlanggananakun",
-        name: "berlanggananakun",
-        meta: {title: 'Berlangganan Akun'},
-        component: importComponent('BerlanggananAkun'),
-    },
-    {
-        path: "/profiluser",
-        name: "profiluser",
-        meta: {title: 'Profil'},
-        component: importComponent('EditUser'),
-    },
+    
     // HOMEPAGELOGINREGISTER
     {
         path: "/",

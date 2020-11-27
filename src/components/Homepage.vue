@@ -245,12 +245,12 @@
             },
 
             
-            onSlideStart(slide) {
-                this.sliding = true
-            },
-            onSlideEnd(slide) {
-                this.sliding = false
-            }              
+            // onSlideStart(slide) {
+            //     this.sliding = true
+            // },
+            // onSlideEnd(slide) {
+            //     this.sliding = false
+            // }              
 
         },
         computed: {
