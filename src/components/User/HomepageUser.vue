@@ -13,8 +13,7 @@
                     <!-- Nanti dibikin profile pake logo sama ada username penggunanya kalo bisa wkwkw-->
                     <b-nav-item href="/profiluser">
                         <v-icon color="#E2EA8D">mdi-account-circle</v-icon> 
-                        <!-- <b-nav-text> {{ user.nama }} -->
-        
+                         {{ userNow.username }}
                     </b-nav-item>
                     <b-nav-item @click="logout"><v-icon color="#E2EA8D" >mdi-logout</v-icon></b-nav-item>
                 </b-navbar-nav>
@@ -37,6 +36,7 @@ export default {
     data() {
         return {
             drawer:true,
+            userNow: [],  
             routes : [
                 { path: '/pesantopup', component: PesanTopUpVue },
                 { path: '/berlanggananakun', component: BerlanggananAkunVue },
@@ -57,20 +57,22 @@ export default {
                 name: 'homepage'
             })
         },
-    //     readData(){
-    //     var url = this.$api + '/profile/'+localStorage.getItem('id')
-    //     this.$http.get(url,{
-    //         headers:{
-    //             'Authorization' : 'Bearer ' + localStorage.getItem('token')
-    //         }
-    //     }).then(response=>{
-    //         this.form = response.data.data
-    //     })
-    //},
-    }
-
-        
-        };
+        readData() {
+                var url = this.$api + '/detailuser'
+                this.$http.get(url, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }).then(response => {
+                    console.log(response)
+                    this.userNow = response.data.user                    
+                })
+        },    
+    },
+    mounted() {
+            this.readData();
+    },      
+};
 </script> 
 <style scoped>
     .fullheight {

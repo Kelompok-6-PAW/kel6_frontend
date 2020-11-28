@@ -139,6 +139,7 @@
                 snackbar: false,
                 error_message: '',
                 color: '',               
+                userNow: [],
                 dataImages: [{
                                 id: '1',
                                 src: 'https://play-lh.googleusercontent.com/iuTt8Y9wzC3YCWgMGp_JcswmXGyG_t6XHDyPDv6ZLlGZQbEbeuLmSbZGD2DHwUB3ZAvY',
@@ -191,7 +192,9 @@
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
                     }
                 }).then(response => {
-                    this.pesanTopUps = response.data.data
+                    console.log(response)
+                    
+                        this.pesanTopUps = response.data.data
                 })
             },
             readDataSelect() {
@@ -204,6 +207,17 @@
                     this.nominalOptions = response.data.data                    
                 })
             },
+            readDataUser() {
+                var url = this.$api + '/detailuser'
+                this.$http.get(url, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }).then(response => {
+                    console.log(response)
+                    this.userNow = response.data.user                    
+                })
+            },  
             setForm() {
                 if (this.inputType === 'Tambah') {
                     this.save()
@@ -342,8 +356,9 @@
             },            
         },
         mounted() {
+            this.readDataUser();
             this.readData();
-            this.readDataSelect();
+            this.readDataSelect();            
         },
     };
 </script>
