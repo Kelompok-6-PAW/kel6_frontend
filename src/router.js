@@ -78,12 +78,12 @@ const router = new VueRouter({
         component: importComponent('Homepage'),
         children: [
             //LOGIN
-            {
-                path: "/login",
-                name: "login",
-                meta: {title: 'Login'},
-                component: importComponent('Login'),
-            },
+            // {
+            //     path: "/login",
+            //     name: "Login",
+            //     meta: {title: 'Login'},
+            //     component: importComponent('Login'),
+            // },
         ]
     },
 
@@ -94,8 +94,10 @@ const router = new VueRouter({
     ],
 });
 
-router.beforeEach((to, from, next) => {
-    document.title = to.meta.title
-    next()
+router.beforeEach((to,from,next)=>{
+    if (to.name != 'homepage' && localStorage.getItem('token')=='') 
+        next({ path:'/homepage' })
+    else 
+        next()
 });
 export default router;
