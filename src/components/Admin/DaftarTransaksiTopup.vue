@@ -1,6 +1,6 @@
 <template>
     <v-main class="list">
-        <h3 class="text-h3 font-weight-medium mb-5">Tambah Nominal Top Up</h3>
+        <h3 class="text-h3 font-weight-medium mb-5">Daftar Transaksi Top Up</h3>
 
         <v-card >
             <v-card-title>
@@ -46,15 +46,15 @@
                         text: "Game",
                         align: "start",
                         sortable: true,
-                        value: "Game",
+                        value: "game",
                     },
-                    { text: "UserID", value: "UserID" },
-                    { text: "Nominal", value: "Nominal" },
-                    { text: "Harga", value: "Harga" },
-                    { text: "Pembayaran", value: "Pembayaran" },
-                    { text: "Username", value: "Username" },
-                    { text: "Konfirmasi", value: "Konfirmasi" },
-                ],              
+                    { text: "UserID", value: "userID" },
+                    { text: "Nominal", value: "nominal" },
+                    { text: "Harga", value: "harga" },
+                    { text: "Pembayaran", value: "pembayaran" },
+                    { text: "Username", value: "uname" },
+                    { text: "Konfirmasi", value: "konfirmasi" },
+                ],          
                 pesanTopUps: [],
                 form: {
                     game: null,
@@ -75,7 +75,10 @@
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
                     }
                 }).then(response => {
-                    this.pesanTopUps = response.data.data
+                    console.log(response)
+                    
+                    this.pesanTopUps = response.data.data;
+                    console.log(this.pesanTopUps)
                 })
             },
                       

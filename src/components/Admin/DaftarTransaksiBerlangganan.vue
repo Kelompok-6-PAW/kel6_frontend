@@ -1,6 +1,6 @@
 <template>
     <v-main class="list">
-        <h3 class="text-h3 font-weight-medium mb-5">Tambah Nominal Top Up</h3>
+        <h3 class="text-h3 font-weight-medium mb-5">Daftar Transaksi Berlangganan</h3>
 
         <v-card >
             <v-card-title>
@@ -46,14 +46,14 @@
                         text: "Aplikasi",
                         align: "start",
                         sortable: true,
-                        value: "Aplikasi",
+                        value: "aplikasi",
                     },
-                    { text: "Email", value: "Email" },
-                    { text: "Jenis Langganan", value: "Jenis" },
-                    { text: "Harga", value: "Harga" },
-                    { text: "Pembayaran", value: "Pembayaran" },
-                    { text: "Username", value: "Username" },
-                    { text: "Konfirmasi", value: "Konfirmasi" },
+                    { text: "Email", value: "email" },
+                    { text: "Jenis Langganan", value: "jenis" },
+                    { text: "Harga", value: "harga" },
+                    { text: "Pembayaran", value: "pembayaran" },
+                    { text: "Username", value: "uname" },
+                    { text: "Konfirmasi", value: "konfirmasi" },
                 ],               
                 berlangganans: [],
                 // form: {

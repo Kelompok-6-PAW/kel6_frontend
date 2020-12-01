@@ -11,7 +11,7 @@
                     <b-nav-item href="/daftartransaksiberlangganan">Daftar Transaksi Berlangganan</b-nav-item>
                     <b-nav-item href="/profiluser">
                         <v-icon color="#E2EA8D">mdi-account-circle</v-icon>
-                        <!-- <b-nav-text> {{ user.nama }} -->
+                       <!--<b-nav-text> {{ user.nama }} </b-nav-text>-->
         
                     </b-nav-item>
                     <b-nav-item @click="logout"><v-icon color="#E2EA8D" >mdi-logout</v-icon></b-nav-item>

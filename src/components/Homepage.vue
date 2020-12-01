@@ -61,26 +61,16 @@
                             ></v-text-field>
                             <v-text-field
                                 v-model="loginForm.password"
+                                :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :rules="rules.required"
+                                :type="show3 ? 'text' : 'password'"
+                                name="input-10-2"
                                 label="Kata Sandi"
-                                required
+                                value="wqfasds"
+                                class="input-group--focused"
+                                @click:append="show3 = !show3"
                             ></v-text-field>
-                            <!-- <v-layout justify-end>
-                                <v-btn class="mr-2" @click="submit()" :class="{ 'grey darken-1 white--text' : valid, disabled: !valid }">Go</v-btn>
-                                <v-btn @click="clear" class="grey darken-3 white--text">Clear</v-btn>
-                            </v-layout> -->
                         </v-form>
-                        <!-- <v-text-field
-                        v-model="loginForm.email"
-                        :rules="emailRules"
-                        label="E-mail"
-                        required
-                        ></v-text-field>
-
-                        <v-text-field
-                        v-model="loginForm.password"
-                        label="Kata Sandi"
-                        required
-                        ></v-text-field> -->
                     </v-container>
                 </v-card-text>
 
@@ -173,6 +163,7 @@
                 onSlideStart: true,
                 onSlideEnd: false,
                 load: false,
+                show3: false,
                 snackbar: false,
                 error_message: '',
                 color: '',
@@ -203,6 +194,9 @@
                     v => !!v || 'E-mail is required',
                     v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
                 ],
+                rules: {
+                    required: value => !!value || 'Required.'
+                },
             };
         },
 
@@ -230,7 +224,7 @@
                             this.snackbar=true;
                             this.load = false;
                             this.resetForm();
-                            if(this.loginForm.email == 'tubespaw6@admin.com'){
+                            if(this.loginForm.email == 'tubespawkel6@gmail.com'){
                                 this.$router.push({
                                 name: 'homepageAdmin'
                                 })
