@@ -76,15 +76,6 @@ const router = new VueRouter({
         name: "homepage",
         meta: {title: 'Couponic'},
         component: importComponent('Homepage'),
-        children: [
-            //LOGIN
-            // {
-            //     path: "/login",
-            //     name: "Login",
-            //     meta: {title: 'Login'},
-            //     component: importComponent('Login'),
-            // },
-        ]
     },
 
     {

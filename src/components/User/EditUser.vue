@@ -1,45 +1,59 @@
 <template>
     <v-main class="list">
-        <h3 class="text-h3 font-weight-bold mb-5 judul">Profil</h3>
+        <h3 class="text-h3 font-weight-bold mb-5 judul">Profilku.</h3>
 
-        <div class="fullheight pa-3 px-16">        
-            <v-card>                
+        <div class="fullheight pa-3 px-10">        
+            <v-card class="mx-auto" max-width="544">                
+                <img class="mx-auto" v-if="form.img_user==null" :src="'https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png'" width:200px height:200px>
+                <img class="mx-auto" v-else :src="form.img_user" style="width: 200px; height: 200px">                                
                 <v-card-text>
-                    <v-container>                        
+                    <v-container>                              
+                        <v-file-input
+                            v-model="img"
+                            outlined 
+                            accept="image/*" 
+                            label="Ganti Foto Profil"
+                            v-on:change="imageChanged(img)">                        
+                        </v-file-input>                        
+
                         <v-text-field
                             v-model="form.email"
                             label="Email"
                             outlined
-                            readonly
-                            required>
+                            readonly                            
+                            prepend-icon="mdi-email">
                         </v-text-field>
                     
                         <v-text-field
                             v-model="form.pass"
                             label="Kata Sandi"
                             outlined
-                            required>
+                            required
+                            prepend-icon="mdi-lock">
                         </v-text-field>
 
                         <v-text-field
                             v-model="form.username"
                             label="Username"
                             outlined
-                            required>
+                            required
+                            prepend-icon="mdi-account-circle">
                         </v-text-field>
 
                         <v-text-field
                             v-model="form.tglLahir"
                             label="Tanggal Lahir"
                             outlined
-                            required>
+                            required
+                            prepend-icon="mdi-calendar-text">
                         </v-text-field>
 
                         <v-text-field
                             v-model="form.jk"
                             label="Jenis Kelamin"
                             outlined
-                            required>
+                            required
+                            prepend-icon="mdi-gender-male-female">
                         </v-text-field>
 
                     </v-container>
@@ -69,7 +83,8 @@
                 snackbar: false,
                 error_message: '',
                 color: '',              
-                userNow: [],                              
+                userNow: [],
+                img: null,                              
                 form: {                    
                     email: null,
                     pass: null,
@@ -104,8 +119,9 @@
                     jenisKelamin: this.form.jk,
                     tglLahir: this.form.tglLahir,
                     password: this.form.pass,                    
-                    img_user: this.form.img_user,                    
+                    img_user: this.form.img_user,                                        
                 }
+                console.log(this.form)
                 var url = this.$api + '/updateuser/'
                 this.load = true
                 this.$http.put(url, newData, {
@@ -134,7 +150,16 @@
                     tglLahir: null,
                     jk: null,
                     img_user: null,   
-                };                
+                };
+                this.img = null;                
+            },
+            imageChanged(e) {                
+                var fileReader = new FileReader()
+                fileReader.readAsDataURL(e)
+                fileReader.onload = (e) => {
+                    this.form.img_user = e.target.result
+                }                
+                console.log(this.form)                
             },                                         
         },        
         mounted() {

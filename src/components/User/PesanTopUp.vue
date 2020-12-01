@@ -2,7 +2,7 @@
     <v-main class="list">
 
         
-        <h3 class="text-h3 font-weight-bold mb-5 judul">Top-Up Game</h3>
+        <h3 class="text-h3 font-weight-bold mb-5 judul">Top-Up Gamemu.</h3>
 
     <div class="fullheight pa-6 px-15">
         <v-card>
@@ -22,7 +22,7 @@
                 </v-btn>
             </v-card-title>
 
-            <v-data-table :headers="headers" :items="pesanTopUps" :search="search">
+            <v-data-table :headers="headers" :items="filteredTable()" :search="search">
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="#ff9a76" small class="mr-2" @click="editHandler(item)">
                         <v-icon color="white">mdi-pencil-circle</v-icon> 
@@ -30,8 +30,8 @@
                     <v-btn color="#ec5858" small class="mr-2" @click="deleteHandler(item.id)">
                         <v-icon color="white">mdi-close-circle</v-icon> 
                     </v-btn>
-                    <v-btn color="#679b9b" small @click="deleteHandler(item.id)">
-                        <v-icon color="white">mdi-check-circle</v-icon> 
+                    <v-btn color="#679b9b" small @click="confirmHandler(item.id)">
+                        <v-icon color="white">mdi-cash-check</v-icon> 
                     </v-btn>
                 </template>
             </v-data-table>            
@@ -48,36 +48,51 @@
 
                         <vue-select-image class="mb-3"
                             :h='80'
-                            :W='80'
+                            :W='80'                            
                             :useLabel=true 
-                            :dataImages="dataImages"
-                            @onselectimage="onSelectImage" 
+                            :dataImages="dataImages"                              
+                            @onselectimage="onSelectImage"
+                            v-if="inputType==='Tambah'"                                                         
                             ref="single-select-image"                           
                             >
                         </vue-select-image>
 
+                        <vue-select-image class="mb-3"
+                            :h='80'
+                            :W='80'                            
+                            :useLabel=true 
+                            :dataImages="initialSelected"
+                            v-else                                                                                                                                                                                                    
+                            >
+                        </vue-select-image>
+                        
                         <v-text-field
                             v-model="form.userID"
                             label="User ID"
                             outlined
-                            required>
+                            required
+                            prepend-icon="mdi-account">
                         </v-text-field>
                     
                         <v-select 
                             v-model="form.nominal"
-                            :items="filteredSelect(form.game)"
+                            :items="filteredSelect(form.game)" 
+                            v-on:change="filteredHarga(form.nominal)"                           
                             item-text="topup"
                             item-value="topup"
                             label="Nominal" 
                             outlined                           
-                            required>
+                            required
+                            prepend-icon="mdi-wallet-giftcard">
                         </v-select>
 
                         <v-text-field
                             v-model="form.harga"
                             label="Harga"
                             outlined
-                            required>
+                            readonly
+                            required
+                            prepend-icon="mdi-cash-usd">
                         </v-text-field>
 
                         <v-select
@@ -85,18 +100,18 @@
                             :items="['OVO', 'GOPAY']"
                             label="Pembayaran"
                             outlined
-                            required>
+                            required
+                            prepend-icon="mdi-credit-card">>
                         </v-select>
 
                     </v-container>
                 </v-card-text>
 
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="red darken-1" outlined @click="cancel">
+                <v-card-actions class="justify-center">                    
+                    <v-btn color="lime darken-1" text @click="cancel">
                         Batal
                     </v-btn>
-                    <v-btn color="blue darken-1" outlined @click="setForm">
+                    <v-btn color="blue darken-1" text @click="setForm">
                         Simpan
                     </v-btn>
                 </v-card-actions>
@@ -105,20 +120,24 @@
 
         <v-dialog v-model="dialogConfirm" persistent max-width="400px">
             <v-card>
-                <v-card-title > 
-                    <span class="headline">warning!</span>
+                <v-card-title class="justify-center">
+                    <v-icon v-if="checkConfirm==false" x-large color="red">mdi-alert-circle</v-icon>
+                    <v-icon v-else x-large color="success">mdi-check-circle</v-icon>                     
                 </v-card-title>
                 <v-card-text>
-                    Anda yakin ingin menghapus pesanan top up ini?
+                    <h5 v-if="checkConfirm==false" class="font-weight-medium">Hapus pesanan top-up ini?</h5>
+                    <h5 v-else class="font-weight-medium">Konfirmasi pesanan top-up ini?</h5>                    
                 </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialogConfirm = false">
+                <v-card-actions class="justify-center">                    
+                    <v-btn color="lime darken-1" text @click="dialogConfirm = false, checkConfirm = false">
                         Batal
                     </v-btn>
-                    <v-btn color="blue darken-1" text @click="deleteData">
+                    <v-btn v-if="checkConfirm==false" color="red darken-1" text @click="deleteData">
                         Hapus
-                    </v-btn>                    
+                    </v-btn>
+                    <v-btn v-else color="success darken-1" text @click="confirmData">
+                        Konfirmasi
+                    </v-btn>                     
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -143,16 +162,33 @@
                 dataImages: [{
                                 id: '1',
                                 src: 'https://play-lh.googleusercontent.com/iuTt8Y9wzC3YCWgMGp_JcswmXGyG_t6XHDyPDv6ZLlGZQbEbeuLmSbZGD2DHwUB3ZAvY',
-                                alt: 'Mobile Legends',                                
+                                alt: 'Mobile Legends',                                   
                                 }, {
                                 id: '2',
-                                src: 'https://lh3.googleusercontent.com/nD3N4Lorg82wdrwqdf0SPjrUImwRT4ThOMU9L5ASGYQIcxJ9xvT-6xGPK6KzccxXlg',
-                                alt: 'PUBGM',                                
+                                src: 'https://www.apkmirror.com/wp-content/uploads/2020/07/43/5f03ed84c1091-384x384.png',
+                                alt: 'PUBGM',                                                           
                                 }, {
                                 id: '3',
                                 src: 'https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com//kaleoz-store/202009/oss-37af9dc791b0866936cbd413950b3697.jpg',
                                 alt: 'Valorant',                                
                             }],
+                dataImagesEdit: [{
+                                id: '1',
+                                src: 'https://play-lh.googleusercontent.com/iuTt8Y9wzC3YCWgMGp_JcswmXGyG_t6XHDyPDv6ZLlGZQbEbeuLmSbZGD2DHwUB3ZAvY',
+                                alt: 'Mobile Legends',   
+                                disabled: false                             
+                                }, {
+                                id: '2',
+                                src: 'https://www.apkmirror.com/wp-content/uploads/2020/07/43/5f03ed84c1091-384x384.png',
+                                alt: 'PUBGM',  
+                                disabled: false                              
+                                }, {
+                                id: '3',
+                                src: 'https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com//kaleoz-store/202009/oss-37af9dc791b0866936cbd413950b3697.jpg',
+                                alt: 'Valorant',
+                                disabled: false                                
+                            }],
+                initialSelected: [],
                 search: null,
                 dialog: false,
                 dialogConfirm: false,
@@ -180,7 +216,9 @@
                     pembayaran: null,                    
                 },
                 deleteId: '',
-                editId: ''
+                editId: '',
+                confirmId: '',
+                checkConfirm: false,
             };
         },
 
@@ -231,7 +269,7 @@
                 this.pesanTopUp.append('nominal', this.form.nominal);
                 this.pesanTopUp.append('harga', this.form.harga);
                 this.pesanTopUp.append('pembayaran', this.form.pembayaran);
-                this.pesanTopUp.append('uname', "rastrk");
+                this.pesanTopUp.append('uname', this.userNow.username);
                 this.pesanTopUp.append('konfirmasi', 'Belum');
 
                 var url = this.$api + '/pesantopup'
@@ -307,6 +345,31 @@
                     this.load=false;
                 })
             },
+            confirmData() {
+                var url = this.$api + '/pesantopup/confirm/' + this.confirmId;
+                console.log(url);
+                this.$http.get(url, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }).then(response => {
+                    this.error_message = response.data.message;
+                    this.color="green"
+                    this.snackbar=true;
+                    this.load=false;
+                    this.checkConfirm=false;
+                    this.close();
+                    this.readData();
+                    this.resetForm();
+                    this.inputType = 'Tambah';
+                }).catch(error => {
+                    this.error_message=error.response.data.message;
+                    this.color="red"
+                    this.snackbar=true;
+                    this.checkConfirm=false;
+                    this.load=false;
+                })
+            },
             editHandler(item) {
                 this.inputType = 'Ubah';
                 this.editId = item.id;
@@ -315,10 +378,16 @@
                 this.form.nominal = item.nominal;
                 this.form.harga = item.harga;
                 this.form.pembayaran = item.pembayaran;
+                this.filteredImage(item.game);                
                 this.dialog = true;
             },
             deleteHandler(id) {
                 this.deleteId = id;
+                this.dialogConfirm = true;
+            },
+            confirmHandler(id) {
+                this.confirmId = id;
+                this.checkConfirm = true;
                 this.dialogConfirm = true;
             },
             close() {
@@ -340,14 +409,34 @@
                     harga: null,
                     pembayaran: null,  
                 };
-                this.$refs['single-select-image'].removeFromSingleSelected()
-            },
+                if (this.inputType==='Ubah'){
+                    this.initialSelected= [];
+                } else {
+                    this.$refs['single-select-image'].removeFromSingleSelected();
+                }                    
+                
+            },            
             filteredSelect(tes){
                 return this.nominalOptions.filter(nominalOption => nominalOption.game === tes)
             },
+            filteredHarga(tes){               
+                 var object = this.nominalOptions.filter(nominalOption => nominalOption.topup === tes)
+                 return this.form.harga = object[0].harga
+            },
+            filteredTable(){
+                return this.pesanTopUps.filter(
+                    pesanTopUp => pesanTopUp.konfirmasi === 'Belum' && pesanTopUp.uname === this.userNow.username)
+            },
+            filteredImage(tes){
+                var pil = this.dataImagesEdit.filter(img => img.alt === tes)
+                this.initialSelected = pil            
+                this.initialSelected[0].disabled = true                                
+            },               
             onSelectImage: function (data) {
                 console.log('fire event onSelectImage: ', data)
                 this.form.game = data.alt
+                this.form.nominal = null
+                this.form.harga = null
             },           
         },
         computed: {
