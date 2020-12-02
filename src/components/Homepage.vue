@@ -171,9 +171,7 @@
                     <v-btn color="lime lighten-1" text @click="cancelRegis">
                         Batal
                     </v-btn>
-                    <v-btn color="lime lighten-1" text @click="close">
-                        Close
-                    </v-btn>
+                   
                     <v-btn color="lime lighten-1" text @click="daftar">
                         Daftar
                     </v-btn>

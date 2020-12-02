@@ -86,9 +86,15 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to,from,next)=>{
-    if (to.name != 'homepage' && localStorage.getItem('token')=='') 
+    if (to.name != 'homepage' && localStorage.getItem('token')=='') {
         next({ path:'/homepage' })
-    else 
+        document.title = to.meta.title
+    }
+        
+    else {
         next()
+        document.title = to.meta.title
+    }
+        
 });
 export default router;

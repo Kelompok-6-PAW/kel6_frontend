@@ -40,13 +40,51 @@
                             prepend-icon="mdi-account-circle">
                         </v-text-field>
 
-                        <v-text-field
+                         <v-menu
+                        ref="menu"
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+                                    v-model="form.tglLahir"
+                                    label="Date"
+                                    prepend-icon="mdi-calendar"
+                                    readonly
+                                    outlined
+                                    v-bind="attrs"
+                                    v-on="on"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker
+                           
                             v-model="form.tglLahir"
-                            label="Tanggal Lahir"
-                            outlined
-                            required
-                            prepend-icon="mdi-calendar-text">
-                        </v-text-field>
+                            :max="new Date().toISOString().substr(0, 10)"
+                            min="1950-01-01"
+                            @change="setDate"
+                            ></v-date-picker>
+                        </v-menu>
+                        
+                        <v-radio-group
+                            v-model="form.jenisKelamin"
+                            
+                            row
+                        >
+                            <v-radio
+                                name="form.jenisKelamin"
+                                label="Pria"
+                                value="pria"
+                            >
+                            </v-radio>
+                            <v-radio
+                             name="form.jenisKelamin"
+                                label="Wanita"
+                                value="wanita"
+                            ></v-radio>
+                        </v-radio-group>
 
                         <v-text-field
                             v-model="form.jk"
@@ -97,6 +135,9 @@
         },
 
         methods: {
+            setDate(date){
+                this.$refs.menu.save(date)
+            },
             readData() {
                 var url = this.$api + '/detailuser'
                 this.$http.get(url, {
