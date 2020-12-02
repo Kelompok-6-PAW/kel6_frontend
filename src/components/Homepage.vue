@@ -6,7 +6,7 @@
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto mr-7 font-weight-medium">
-                    <b-nav-item @click="dialog = true">Tentang Kami</b-nav-item>
+                    <b-nav-item @click="dialogTentang = true">Tentang Kami</b-nav-item>
                     <b-nav-item @click="dialogRegister = true">Daftar</b-nav-item>
                     <b-nav-item @click="dialog = true">Masuk</b-nav-item>
                 </b-navbar-nav>
@@ -77,7 +77,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
 
-                    <v-btn color="lime lighten-1" text @click="close">
+                    <v-btn color="lime lighten-1" text @click="cancelLogin">
                         Batal
                     </v-btn>
                     <v-btn color="lime lighten-1" text @click="login">
@@ -87,6 +87,7 @@
             </v-card>
         </v-dialog>
 
+        <!-- Dialog Registrasi -->
         <v-dialog v-model="dialogRegister" persistent max-width="600px">
             <v-card>
                 <v-card-title>
@@ -98,39 +99,68 @@
                         v-model="regisForm.email"
                         :rules="emailRules"
                         label="E-mail"
+                        prepend-inner-icon="mdi-at"
+                        outlined
                         required
                         ></v-text-field>
 
                         <v-text-field
                         v-model="regisForm.password"
                         label="Kata Sandi"
+                        prepend-inner-icon="mdi-lock"
+                        outlined
                         required
                         ></v-text-field>
 
                         <v-text-field
                         v-model="regisForm.username"
                         label="Username"
+                        prepend-inner-icon="mdi-account"
+                        outlined
                         required
                         ></v-text-field>
 
-                        <v-text-field
-                        v-model="regisForm.tanggalLahir"
-                        label="Tanggal Lahir"
-                        required
-                        ></v-text-field>
+                        <v-menu
+                        ref="menu"
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                                v-model="regisForm.tanggalLahir"
+                                label="Date"
+                                prepend-inner-icon="mdi-calendar"
+                                readonly
+                                outlined
+                                v-bind="attrs"
+                                v-on="on"
+                            ></v-text-field>
+                            </template>
+                            <v-date-picker
+                            ref="picker"
+                            v-model="regisForm.tanggalLahir"
+                            :max="new Date().toISOString().substr(0, 10)"
+                            min="1950-01-01"
+                            @change="setDate"
+                            ></v-date-picker>
+                        </v-menu>
 
                         <v-radio-group
-                        v-model="row"
-                        row
+                            v-model="regisForm.jenisKelamin"
+                            row
                         >
-                        <v-radio
-                            label="Pria"
-                            value="pria"
-                        ></v-radio>
-                        <v-radio
-                            label="Wanita"
-                            value="wanita"
-                        ></v-radio>
+                            <v-radio
+                                label="Pria"
+                                value="pria"
+                            >
+                            </v-radio>
+                            <v-radio
+                                label="Wanita"
+                                value="wanita"
+                            ></v-radio>
                         </v-radio-group>
                     </v-container>
                 </v-card-text>
@@ -138,7 +168,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
 
-                    <v-btn color="lime lighten-1" text @click="close">
+                    <v-btn color="lime lighten-1" text @click="cancelRegis">
                         Batal
                     </v-btn>
                     <v-btn color="lime lighten-1" text @click="daftar">
@@ -162,30 +192,35 @@
                 inputType: 'Tambah',
                 onSlideStart: true,
                 onSlideEnd: false,
+                menu: false,
                 load: false,
                 show3: false,
                 snackbar: false,
                 error_message: '',
                 color: '',
-                search: null,
+                // search: null,
                 dialog: false,
                 dialogRegister: false,
-                dialogConfirm: false,
-                pesanTopUp: new FormData,                             
-                form: {
-                    game: null,
-                    userID: null,
-                    nominal: null,
-                    harga: null,
-                    pembayaran: null,                    
-                },
+                // dialogConfirm: false,
+                // pesanTopUp: new FormData,                             
+                // form: {
+                //     game: null,
+                //     userID: null,
+                //     nominal: null,
+                //     harga: null,
+                //     pembayaran: null,                    
+                // },
                 loginForm: {
                     email:this.email,
                     password:this.password,
                 },
+                user: new FormData,
                 regisForm: {
-                    email:"",
-                    password:""
+                    email: this.email,
+                    password: this.password,
+                    username: this.username,
+                    tanggalLahir: this.tanggalLahir,
+                    jenisKelamin: this.jenisKelamin,
                 },
                 deleteId: '',
                 editId: '',
@@ -200,16 +235,25 @@
             };
         },
 
-        methods: {
-            setForm() {
-                if (this.inputType === 'Tambah') {
-                    this.save()
-                } else {
-                    this.update()
-                }
+        watch: {
+            menu(val){
+                val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
             },
-            login() {
-                
+        },
+
+        methods: {
+            setDate(date){
+                this.$refs.menu.save(date)
+            },
+
+            // setForm() {
+            //     if (this.inputType === 'Tambah') {
+            //         this.save()
+            //     } else {
+            //         this.update()
+            //     }
+            // },
+            login() {        
                 if (this.$refs.form.validate()) { //cek apakah data yang akan dikirim sudah valid
                     this.load=true
                     this.$http.post(this.$api+ '/login', {
@@ -242,29 +286,67 @@
                         })
                 }
             },
-            close() {
-                this.dialog = false;
-                this.dialogRegister = false;
-                this.dialogConfirm = false;
-                this.inputType = 'Tambah';
+
+            daftar() {
+                this.user.append('email', this.regisForm.email);
+                this.user.append('password', this.regisForm.password);
+                this.user.append('username', this.regisForm.username);
+                this.user.append('tglLahir', this.regisForm.tanggalLahir);
+                this.user.append('jenisKelamin', this.regisForm.jenisKelamin);
+
+                var url = this.$api + '/register'
+                this.$http.post(url, this.user)
+                .then(response => {
+                    console.log(this.regisForm);
+                    this.error_message=response.data.message;
+                    this.color="green"
+                    this.snackbar=true;
+                    this.load=false;
+                    this.resetFormRegis();
+                    this.close();
+                    this.readData(); //ambil data
+                }).catch(error => {
+                    this.error_message = error.response.data.message;
+                    this.color = "red"
+                    this.snackbar = true;
+                    this.load = false;
+                })
+                
             },
-            cancel() {
-                this.resetForm();
+
+            // close() {
+            //     this.dialog = false;
+            //     this.dialogRegister = false;
+            //     this.dialogConfirm = false;
+            //     this.inputType = 'Tambah';
+            // },
+            cancelLogin() {
+                this.dialog = false;
                 this.readData();
-                this.dialog = false;
-                this.inputType = 'Tambah';
+                this.resetForm();
             },
+
+            cancelRegis() {
+                this.dialogRegister = false;
+                this.resetFormRegis();
+            },
+
             resetForm() {
-                this.form = {
-                    game: null,
-                    userID: null,
-                    nominal: null,
-                    harga: null,
-                    pembayaran: null,  
+                this.loginForm = {
+                    email: null,
+                    password: null,
                 };
             },
 
-            
+            resetFormRegis() {
+                this.regisForm = {
+                    email: '',
+                    password: '',
+                    username: '',
+                    tanggalLahir: '',
+                    jenisKelamin: '',
+                }
+            },
             // onSlideStart(slide) {
             //     this.sliding = true
             // },
