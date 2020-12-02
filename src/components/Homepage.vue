@@ -171,6 +171,9 @@
                     <v-btn color="lime lighten-1" text @click="cancelRegis">
                         Batal
                     </v-btn>
+                    <v-btn color="lime lighten-1" text @click="close">
+                        Close
+                    </v-btn>
                     <v-btn color="lime lighten-1" text @click="daftar">
                         Daftar
                     </v-btn>
@@ -306,9 +309,9 @@
                     this.error_message=response.data.message;
                     this.color="green"
                     this.snackbar=true;
-                    this.load=false;
+                    this.load=false;     
+                    this.close();
                     this.resetFormRegis();
-                    this.close;
                     this.readData(); //ambil data
                 }).catch(error => {
                     this.error_message = error.response.data.message;
@@ -320,7 +323,6 @@
             },
 
             close() {
-                this.dialog = false;
                 this.dialogRegister = false;
             },
             cancelLogin() {
