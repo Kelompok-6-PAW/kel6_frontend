@@ -39,7 +39,7 @@
             <b-carousel-slide img-src="https://www.popsci.com/resizer/0eQsCPRWhjB3PNPxqrtRnPNGxwA=/1200x628/smart/arc-anglerfish-arc2-prod-bonnier.s3.amazonaws.com/public/AUSBJ7SDRWXMD7VXVNJASUT6ME.jpg">
                 <h1>Hello world!</h1>
                 <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>                
-            </b-carousel-slide>
+            </b-carousel-slide>            
 
             </b-carousel>
         </div>
@@ -48,7 +48,7 @@
         <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card>
                 <v-card-title>
-                    <span class="headline">Masuk di Couponic</span>
+                    <span class="headline font-weight-bold">Masuk di Couponic</span>                    
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -57,6 +57,8 @@
                                 v-model="loginForm.email"
                                 :rules="emailRules"
                                 label="E-mail"
+                                prepend-icon="mdi-email"
+                                outlined
                                 required
                             ></v-text-field>
                             <v-text-field
@@ -68,19 +70,19 @@
                                 label="Kata Sandi"
                                 value="wqfasds"
                                 class="input-group--focused"
+                                prepend-icon="mdi-lock"
+                                outlined
                                 @click:append="show3 = !show3"
                             ></v-text-field>
                         </v-form>
                     </v-container>
                 </v-card-text>
 
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-
+                <v-card-actions class="justify-center">                   
                     <v-btn color="lime lighten-1" text @click="cancelLogin">
                         Batal
                     </v-btn>
-                    <v-btn color="lime lighten-1" text @click="login">
+                    <v-btn color="blue lighten-1" text @click="login">
                         Masuk
                     </v-btn>
                 </v-card-actions>
@@ -91,7 +93,7 @@
         <v-dialog v-model="dialogRegister" persistent max-width="600px">
             <v-card>
                 <v-card-title>
-                    <span class="headline">Daftar di Couponic</span>
+                    <span class="headline font-weight-bold">Daftar di Couponic</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -99,7 +101,7 @@
                         v-model="regisForm.email"
                         :rules="emailRules"
                         label="E-mail"
-                        prepend-inner-icon="mdi-at"
+                        prepend-icon="mdi-email"
                         outlined
                         required
                         ></v-text-field>
@@ -107,7 +109,7 @@
                         <v-text-field
                         v-model="regisForm.password"
                         label="Kata Sandi"
-                        prepend-inner-icon="mdi-lock"
+                        prepend-icon="mdi-lock"
                         outlined
                         required
                         ></v-text-field>
@@ -115,7 +117,7 @@
                         <v-text-field
                         v-model="regisForm.username"
                         label="Username"
-                        prepend-inner-icon="mdi-account"
+                        prepend-icon="mdi-account-circle"
                         outlined
                         required
                         ></v-text-field>
@@ -132,7 +134,7 @@
                             <v-text-field
                                 v-model="regisForm.tanggalLahir"
                                 label="Date"
-                                prepend-inner-icon="mdi-calendar"
+                                prepend-icon="mdi-calendar-text"
                                 readonly
                                 outlined
                                 v-bind="attrs"
@@ -165,14 +167,12 @@
                     </v-container>
                 </v-card-text>
 
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-
+                <v-card-actions class="justify-center">
                     <v-btn color="lime lighten-1" text @click="cancelRegis">
                         Batal
                     </v-btn>
                    
-                    <v-btn color="lime lighten-1" text @click="daftar">
+                    <v-btn color="blue lighten-1" text @click="daftar">
                         Daftar
                     </v-btn>
                 </v-card-actions>
@@ -198,19 +198,9 @@
                 show3: false,
                 snackbar: false,
                 error_message: '',
-                color: '',
-                // search: null,
+                color: '',                
                 dialog: false,
-                dialogRegister: false,
-                // dialogConfirm: false,
-                // pesanTopUp: new FormData,                             
-                // form: {
-                //     game: null,
-                //     userID: null,
-                //     nominal: null,
-                //     harga: null,
-                //     pembayaran: null,                    
-                // },
+                dialogRegister: false,                
                 loginForm: {
                     email:this.email,
                     password:this.password,
@@ -245,15 +235,7 @@
         methods: {
             setDate(date){
                 this.$refs.menu.save(date)
-            },
-
-            // setForm() {
-            //     if (this.inputType === 'Tambah') {
-            //         this.save()
-            //     } else {
-            //         this.update()
-            //     }
-            // },
+            },           
             login() {        
                 if (this.$refs.form.validate()) { //cek apakah data yang akan dikirim sudah valid
                     this.load=true
@@ -267,8 +249,7 @@
 
                             this.color="green"
                             this.snackbar=true;
-                            this.load = false;
-                            this.resetForm();
+                            this.load = false;                            
                             if(this.loginForm.email == 'tubespawkel6@gmail.com'){
                                 this.$router.push({
                                 name: 'homepageAdmin'
@@ -278,6 +259,7 @@
                                     name: 'homepageUser'
                                 })
                             }
+                            this.resetForm();
                         }).catch(error => {
                         this.error_message=error.response.data.message; 
                         this.color="red" 

@@ -1,6 +1,6 @@
 <template>
     <v-main class="list">
-        <h3 class="text-h3 font-weight-bold mb-5 judul">Daftar Nominal Top Up Game</h3>
+        <h3 class="text-h3 font-weight-bold mb-5 judul">Daftar Nominal Top Up Game.</h3>
 
     <div class="fullheight pa-6 px-15">
         <v-card >
@@ -24,10 +24,21 @@
                 <template v-slot:[`item.actions`]="{ item }">
                      <v-btn color="#ff9a76" small class="mr-2" @click="editHandler(item)">
                         <v-icon color="white">mdi-pencil-circle</v-icon> 
-                    </v-btn>
+                    </v-btn>                    
                     <v-btn color="#ec5858" small class="mr-2" @click="deleteHandler(item.id)">
                         <v-icon color="white">mdi-close-circle</v-icon> 
-                    </v-btn>
+                    </v-btn>                                        
+                </template>
+                <template v-slot:[`item.harga`]="{ item }">
+                    <span>Rp {{ item.harga }} </span>
+                </template>
+                <template v-slot:[`item.game`]="{ item }">
+                    <v-avatar                                                                
+                        size="36px">
+                        <img v-if="item.game==='Mobile Legends'" src="https://play-lh.googleusercontent.com/iuTt8Y9wzC3YCWgMGp_JcswmXGyG_t6XHDyPDv6ZLlGZQbEbeuLmSbZGD2DHwUB3ZAvY">
+                        <img v-else-if="item.game==='PUBGM'" src="https://www.apkmirror.com/wp-content/uploads/2020/07/43/5f03ed84c1091-384x384.png">
+                        <img v-else src="https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com//kaleoz-store/202009/oss-37af9dc791b0866936cbd413950b3697.jpg">
+                    </v-avatar>
                 </template>
             </v-data-table>
         </v-card>
@@ -40,13 +51,24 @@
                 </v-card-title>
                 <v-card-text>
                     <v-container>
+
                         <vue-select-image class="mb-3"
                             :h='80'
-                            :W='80'
+                            :W='80'                            
                             :useLabel=true 
-                            :dataImages="dataImages"
-                            @onselectimage="onSelectImage" 
+                            :dataImages="dataImages"                              
+                            @onselectimage="onSelectImage"
+                            v-if="inputType==='Tambah'"                                                         
                             ref="single-select-image"                           
+                            >
+                        </vue-select-image>
+
+                        <vue-select-image class="mb-3"
+                            :h='80'
+                            :W='80'                            
+                            :useLabel=true 
+                            :dataImages="initialSelected"
+                            v-else                                                                                                                                                                                                    
                             >
                         </vue-select-image>
 
@@ -54,6 +76,7 @@
                             v-model="form.topup"
                             label="Top Up"
                             outlined
+                            prepend-icon="mdi-wallet-giftcard"
                             required>
                         </v-text-field>
 
@@ -61,23 +84,26 @@
                             v-model="form.harga"
                             label="Harga"
                             outlined
+                            type="number"
+                            prefix="Rp"
+                            prepend-icon="mdi-cash-usd"
                             required>
                         </v-text-field>
 
                         <v-text-field
                             v-model="form.stok"
                             label="Stok"
-                            outlined
+                            type="number"
+                            outlined                            
+                            prepend-icon="mdi-cube"
                             required>
                         </v-text-field>
 
                     </v-container>
                 </v-card-text>
 
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-
-                    <v-btn color="blue darken-1" text @click="cancel">
+                <v-card-actions class="justify-center">                    
+                    <v-btn color="lime darken-1" text @click="cancel">
                         Batal
                     </v-btn>
                     <v-btn color="blue darken-1" text @click="setForm">
@@ -89,18 +115,17 @@
 
         <v-dialog v-model="dialogConfirm" persistent max-width="400px">
             <v-card>
-                <v-card-title > 
-                    <span class="headline">warning!</span>
+                <v-card-title class="justify-center">
+                    <v-icon x-large color="red">mdi-alert-circle</v-icon>                    
                 </v-card-title>
                 <v-card-text>
-                    Anda yakin ingin menghapus pesanan top up ini?
+                    <h5 class="font-weight-medium">Hapus pesanan top-up ini?</h5>                    
                 </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialogConfirm = false">
+                <v-card-actions class="justify-center">                    
+                    <v-btn color="lime darken-1" text @click="dialogConfirm = false">
                         Batal
                     </v-btn>
-                    <v-btn color="blue darken-1" text @click="deleteData">
+                    <v-btn color="red darken-1" text @click="deleteData">
                         Hapus
                     </v-btn>                    
                 </v-card-actions>
@@ -123,20 +148,37 @@
                 snackbar: false,
                 error_message: '',
                 color: '',
+                userNow: [],
                 dataImages: [{
                                 id: '1',
                                 src: 'https://play-lh.googleusercontent.com/iuTt8Y9wzC3YCWgMGp_JcswmXGyG_t6XHDyPDv6ZLlGZQbEbeuLmSbZGD2DHwUB3ZAvY',
-                                alt: 'Mobile Legends',                                
+                                alt: 'Mobile Legends',                                   
                                 }, {
                                 id: '2',
-                                src: 'https://lh3.googleusercontent.com/nD3N4Lorg82wdrwqdf0SPjrUImwRT4ThOMU9L5ASGYQIcxJ9xvT-6xGPK6KzccxXlg',
-                                alt: 'PUBGM',                                
+                                src: 'https://www.apkmirror.com/wp-content/uploads/2020/07/43/5f03ed84c1091-384x384.png',
+                                alt: 'PUBGM',                                                           
                                 }, {
                                 id: '3',
                                 src: 'https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com//kaleoz-store/202009/oss-37af9dc791b0866936cbd413950b3697.jpg',
                                 alt: 'Valorant',                                
                             }],
-                search: null,
+                dataImagesEdit: [{
+                                id: '1',
+                                src: 'https://play-lh.googleusercontent.com/iuTt8Y9wzC3YCWgMGp_JcswmXGyG_t6XHDyPDv6ZLlGZQbEbeuLmSbZGD2DHwUB3ZAvY',
+                                alt: 'Mobile Legends',   
+                                disabled: false                             
+                                }, {
+                                id: '2',
+                                src: 'https://www.apkmirror.com/wp-content/uploads/2020/07/43/5f03ed84c1091-384x384.png',
+                                alt: 'PUBGM',  
+                                disabled: false                              
+                                }, {
+                                id: '3',
+                                src: 'https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com//kaleoz-store/202009/oss-37af9dc791b0866936cbd413950b3697.jpg',
+                                alt: 'Valorant',
+                                disabled: false                                
+                            }],
+                initialSelected: [],
                 dialog: false,
                 dialogConfirm: false,
                 headers: [
@@ -153,6 +195,7 @@
                 ],
                 tambahNominal: new FormData,
                 tambahNominals: [],
+                pesanTopUps: [],
                 form: {
                     game: null,
                     topup: null,                    
@@ -160,7 +203,8 @@
                     stok: null,                    
                 },
                 deleteId: '',
-                editId: ''
+                editId: '',
+                checkActions: false
             };
         },
 
@@ -175,6 +219,27 @@
                     this.tambahNominals = response.data.data
                 })
             },
+            readDataUser() {
+                var url = this.$api + '/detailuser'
+                this.$http.get(url, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }).then(response => {
+                    console.log(response)
+                    this.userNow = response.data.user                    
+                })
+            },  
+            readDataPesanTopUp() {
+                var url = this.$api + '/pesantopup'
+                this.$http.get(url, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }).then(response => {                                        
+                    this.pesanTopUps = response.data.data
+                })
+            },            
             setForm() {
                 if (this.inputType === 'Tambah') {
                     this.save()
@@ -267,6 +332,7 @@
                 this.form.topup = item.topup;                
                 this.form.harga = item.harga;
                 this.form.stok = item.stok;
+                this.filteredImage(item.game);
                 this.dialog = true;
             },
             deleteHandler(id) {
@@ -291,12 +357,22 @@
                     harga: null,
                     stok: null, 
                 };
-                this.$refs['single-select-image'].removeFromSingleSelected()
+                if (this.inputType==='Ubah'){
+                    this.initialSelected= [];
+                } else {
+                    this.$refs['single-select-image'].removeFromSingleSelected();
+                } 
             },
+            filteredImage(tes){
+                var pil = this.dataImagesEdit.filter(img => img.alt === tes)
+                this.initialSelected = pil            
+                this.initialSelected[0].disabled = true                                
+            },  
             onSelectImage: function (data) {
                 console.log('fire event onSelectImage: ', data)
                 this.form.game = data.alt
-            },                
+                this.form.topup = null                
+            },                            
         },
         computed: {
             formTitle() {
@@ -305,6 +381,8 @@
         },
         mounted() {
             this.readData();
+            this.readDataPesanTopUp();
+            this.filteredSelect();
         },
     };
 </script>

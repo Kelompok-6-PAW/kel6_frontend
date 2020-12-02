@@ -1,6 +1,6 @@
 <template>
     <v-main class="list">
-        <h3 class="text-h3 font-weight-bold mb-5 judul">Profilku.</h3>
+        <h3 class="text-h3 font-weight-bold mb-5 judul">Profil.</h3>
 
         <div class="fullheight pa-3 px-10">        
             <v-card class="mx-auto" max-width="544">                
@@ -126,11 +126,12 @@
                 form: {                    
                     email: null,
                     pass: null,
-                    username: null,
+                    username: null,                    
                     tglLahir: null,
                     jk: null,
                     img_user: null,                    
-                },                
+                },
+                usernameLama: null,                
             };
         },
 
@@ -147,7 +148,8 @@
                 }).then(response => {
                     console.log(response)
                     this.userNow = response.data.user
-                    this.form.username = this.userNow.username;  
+                    this.usernameLama = this.userNow.username;
+                    this.form.username = this.userNow.username;                      
                     this.form.email = this.userNow.email;
                     this.form.tglLahir = this.userNow.tglLahir;  
                     this.form.jk = this.userNow.jenisKelamin;
@@ -156,6 +158,7 @@
             },                        
             update() {
                 let newData = {
+                    usernameLama: this.usernameLama,
                     username: this.form.username,                    
                     jenisKelamin: this.form.jk,
                     tglLahir: this.form.tglLahir,
@@ -187,12 +190,13 @@
                 this.form = {
                     email: null,
                     pass: null,
-                    username: null,
+                    username: null,                    
                     tglLahir: null,
                     jk: null,
                     img_user: null,   
                 };
-                this.img = null;                
+                this.img = null;
+                this.usernameLama = null;                
             },
             imageChanged(e) {                
                 var fileReader = new FileReader()

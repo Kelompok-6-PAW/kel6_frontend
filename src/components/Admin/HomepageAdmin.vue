@@ -9,10 +9,10 @@
                     <b-nav-item href="/tambahnominal">Daftar Nominal Top up</b-nav-item>
                     <b-nav-item href="/daftartransaksitopup">Daftar Transaksi Topup</b-nav-item>
                     <b-nav-item href="/daftartransaksiberlangganan">Daftar Transaksi Berlangganan</b-nav-item>
-                    <b-nav-item href="/profiluser">
-                        <v-icon color="#E2EA8D">mdi-account-circle</v-icon>
-                       <!--<b-nav-text> {{ user.nama }} </b-nav-text>-->
-        
+                    
+                    <b-nav-item href="/">
+                        <v-icon color="#E2EA8D">mdi-account-circle</v-icon> 
+                         {{ userNow.username }}
                     </b-nav-item>
                     <b-nav-item @click="logout"><v-icon color="#E2EA8D" >mdi-logout</v-icon></b-nav-item>
                 </b-navbar-nav>
@@ -33,6 +33,7 @@ export default {
     data() {
         return {
             drawer:true,
+            userNow: [], 
             routes : [
                 { path: '/tambahnominal', component: TambahNominalVue },
                 { path: '/daftartransaksitopup', component: DaftarTransaksiTopupVue },
@@ -41,24 +42,31 @@ export default {
             ],
         }; 
     },
-    // methods:{
-    //     logout(){
-    //         localStorage.setItem("token",'');
-    //         localStorage.setItem("id",'');
-    //         console.log(localStorage.getItem('token'))
-    //         this.$router.push({
-    //             name: 'Login'
-    //         })
-    //     },
-    //     profile(){
-    //         this.$router.push({
-    //             name: 'Profile'
-    //         })
-    //     }
-    // }
-
-        
-        };
+    methods:{
+        logout(){
+            localStorage.setItem("token",'');
+            localStorage.setItem("id",'');
+            console.log(localStorage.getItem('token'))
+            this.$router.push({
+                name: 'homepage'
+            })
+        },
+        readData() {
+                var url = this.$api + '/detailuser'
+                this.$http.get(url, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }).then(response => {
+                    console.log(response)
+                    this.userNow = response.data.user                    
+                })
+        },    
+    },
+    mounted() {
+            this.readData();
+    },              
+};
 </script> 
 <style>  
 

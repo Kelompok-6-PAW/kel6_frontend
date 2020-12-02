@@ -1,7 +1,8 @@
 <template>
     <v-main class="list">
-        <h3 class="text-h3 font-weight-medium mb-5">Daftar Transaksi Top Up</h3>
+        <h3 class="text-h3 font-weight-bold mb-5 judul">Daftar Transaksi Top Up</h3>
 
+    <div class="fullheight pa-6 px-15">
         <v-card >
             <v-card-title>
                 <v-text-field
@@ -20,10 +21,17 @@
             </v-card-title>
 
             <v-data-table :headers="headers" :items="pesanTopUps" :search="search">
-                
+                <template v-slot:[`item.game`]="{ item }">
+                    <v-avatar                                                                
+                        size="36px">
+                        <img v-if="item.game==='Mobile Legends'" src="https://play-lh.googleusercontent.com/iuTt8Y9wzC3YCWgMGp_JcswmXGyG_t6XHDyPDv6ZLlGZQbEbeuLmSbZGD2DHwUB3ZAvY">
+                        <img v-else-if="item.game==='PUBGM'" src="https://www.apkmirror.com/wp-content/uploads/2020/07/43/5f03ed84c1091-384x384.png">
+                        <img v-else src="https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com//kaleoz-store/202009/oss-37af9dc791b0866936cbd413950b3697.jpg">
+                    </v-avatar>
+                </template>
             </v-data-table>
         </v-card>
-
+    </div>
        
     </v-main>
 </template>

@@ -20,6 +20,7 @@
                 </b-collapse>
             </b-navbar>
         </div>
+        
         <div class=" lighten-4 fullheight pa-5">
             <router-view></router-view>
         </div>
@@ -36,6 +37,8 @@ export default {
     data() {
         return {
             drawer:true,
+            onSlideStart: true,
+            onSlideEnd: false,
             userNow: [],  
             routes : [
                 { path: '/pesantopup', component: PesanTopUpVue },
@@ -74,9 +77,7 @@ export default {
     },      
 };
 </script> 
-<style scoped>
-    .fullheight {
-    min-height: 100vh !important; }
+<style scoped>   
 
     .router{
         text-decoration: none;

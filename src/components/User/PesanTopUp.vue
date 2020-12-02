@@ -1,8 +1,7 @@
 <template>
     <v-main class="list">
 
-        
-        <h3 class="text-h3 font-weight-bold mb-5 judul">Top-Up Gamemu.</h3>
+        <h3 class="text-h3 font-weight-bold mb-5 judul">Top-Up Game.</h3>
 
     <div class="fullheight pa-6 px-15">
         <v-card>
@@ -33,6 +32,17 @@
                     <v-btn color="#679b9b" small @click="confirmHandler(item.id)">
                         <v-icon color="white">mdi-cash-check</v-icon> 
                     </v-btn>
+                </template>
+                <template v-slot:[`item.harga`]="{ item }">
+                    <span>Rp {{ item.harga }} </span>
+                </template>
+                <template v-slot:[`item.game`]="{ item }">
+                    <v-avatar                                                                
+                        size="36px">
+                        <img v-if="item.game==='Mobile Legends'" src="https://play-lh.googleusercontent.com/iuTt8Y9wzC3YCWgMGp_JcswmXGyG_t6XHDyPDv6ZLlGZQbEbeuLmSbZGD2DHwUB3ZAvY">
+                        <img v-else-if="item.game==='PUBGM'" src="https://www.apkmirror.com/wp-content/uploads/2020/07/43/5f03ed84c1091-384x384.png">
+                        <img v-else src="https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com//kaleoz-store/202009/oss-37af9dc791b0866936cbd413950b3697.jpg">
+                    </v-avatar>
                 </template>
             </v-data-table>            
         </v-card>
@@ -88,8 +98,10 @@
 
                         <v-text-field
                             v-model="form.harga"
+                            disabled
                             label="Harga"
                             outlined
+                            prefix="Rp"
                             readonly
                             required
                             prepend-icon="mdi-cash-usd">
@@ -101,7 +113,7 @@
                             label="Pembayaran"
                             outlined
                             required
-                            prepend-icon="mdi-credit-card">>
+                            prepend-icon="mdi-credit-card">
                         </v-select>
 
                     </v-container>
@@ -377,7 +389,7 @@
                 this.form.userID = item.userID;
                 this.form.nominal = item.nominal;
                 this.form.harga = item.harga;
-                this.form.pembayaran = item.pembayaran;
+                this.form.pembayaran = item.pembayaran;                
                 this.filteredImage(item.game);                
                 this.dialog = true;
             },
@@ -417,7 +429,7 @@
                 
             },            
             filteredSelect(tes){
-                return this.nominalOptions.filter(nominalOption => nominalOption.game === tes)
+                return this.nominalOptions.filter(nominalOption => nominalOption.game === tes && nominalOption.stok > 0)
             },
             filteredHarga(tes){               
                  var object = this.nominalOptions.filter(nominalOption => nominalOption.topup === tes)
