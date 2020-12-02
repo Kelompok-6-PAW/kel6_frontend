@@ -295,15 +295,20 @@
                 this.user.append('jenisKelamin', this.regisForm.jenisKelamin);
 
                 var url = this.$api + '/register'
-                this.$http.post(url, this.user)
-                .then(response => {
+                this.$http.post(url, this.user, {
+                    email: this.regisForm.email,
+                    password: this.regisForm.password,
+                    username: this.regisForm.username,
+                    tglLahir: this.regisForm.tanggalLahir,
+                    jenisKelamin: this.regisForm.jenisKelamin,
+                }).then(response => {
                     console.log(this.regisForm);
                     this.error_message=response.data.message;
                     this.color="green"
                     this.snackbar=true;
                     this.load=false;
                     this.resetFormRegis();
-                    this.close();
+                    this.close;
                     this.readData(); //ambil data
                 }).catch(error => {
                     this.error_message = error.response.data.message;
@@ -314,12 +319,10 @@
                 
             },
 
-            // close() {
-            //     this.dialog = false;
-            //     this.dialogRegister = false;
-            //     this.dialogConfirm = false;
-            //     this.inputType = 'Tambah';
-            // },
+            close() {
+                this.dialog = false;
+                this.dialogRegister = false;
+            },
             cancelLogin() {
                 this.dialog = false;
                 this.readData();
