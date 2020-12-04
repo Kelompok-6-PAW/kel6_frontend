@@ -1,8 +1,8 @@
 <template>
-    <v-main class="Home">
+    <v-main class="List">
         <div>
             <b-navbar toggleable="lg" type="dark" class="napbar">
-                <b-navbar-brand href="#">Couponic</b-navbar-brand>
+                <b-navbar-brand href="#"><img src="@/assets/couponic.png" width="100" alt=""></b-navbar-brand>
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto mr-7 font-weight-medium">

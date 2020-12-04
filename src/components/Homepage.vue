@@ -2,7 +2,7 @@
     <v-main class="Home">
         <div>
             <b-navbar toggleable="lg" type="dark" class="napbar">
-                <b-navbar-brand href="#">Couponic</b-navbar-brand>
+                <b-navbar-brand href="#"><img src="@/assets/couponic.png" width="100" alt=""></b-navbar-brand>
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto mr-7 font-weight-medium">
@@ -108,6 +108,7 @@
 
                         <v-text-field
                         v-model="regisForm.password"
+                        :rules="rules"
                         label="Kata Sandi"
                         prepend-icon="mdi-lock"
                         outlined
@@ -116,6 +117,7 @@
 
                         <v-text-field
                         v-model="regisForm.username"
+                        :rules="rules"
                         label="Username"
                         prepend-icon="mdi-account-circle"
                         outlined
@@ -139,6 +141,7 @@
                                 outlined
                                 v-bind="attrs"
                                 v-on="on"
+                                :rules="rules"
                             ></v-text-field>
                             </template>
                             <v-date-picker
@@ -152,6 +155,7 @@
 
                         <v-radio-group
                             v-model="regisForm.jenisKelamin"
+                            :rules="rules"
                             row
                         >
                             <v-radio
@@ -186,6 +190,7 @@
 </template>
 
 <script>
+//import image from "./assets/couponic.png"
     export default {
         name: "Home",
         data() {
@@ -220,9 +225,9 @@
                     v => !!v || 'E-mail is required',
                     v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
                 ],
-                rules: {
-                    required: value => !!value || 'Required.'
-                },
+                rules: [
+                    v => !!v || 'required'
+                ],
             };
         },
 
@@ -252,7 +257,7 @@
                             this.load = false;                            
                             if(this.loginForm.email == 'tubespawkel6@gmail.com'){
                                 this.$router.push({
-                                name: 'homepageAdmin'
+                                name: 'tambahnominal'
                                 })
                             }else{
                                 this.$router.push({
