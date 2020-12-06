@@ -3,14 +3,35 @@
         <h3 class="text-h3 font-weight-bold mb-5 judul">Profil.</h3>
 
         <div class="fullheight pa-3 px-10">        
-            <v-card class="mx-auto" max-width="544">                
-                <img class="mx-auto" v-if="form.img_user==null" :src="'https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png'" width:200px height:200px>
-                <img class="mx-auto" v-else :src="form.img_user" style="width: 200px; height: 200px">                                
+            <v-card class="mx-auto" max-width="544">    
+             
+                    <img  class="mx-auto rounded-card" v-if="form.img_user==null" :src="'https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png'" width:200px height:200px>
+                    <img class="mx-auto rounded-card" v-else :src="form.img_user" style="width: 200px; height: 200px">                                
+                          
+               
                 <v-card-text>
-                    <v-container>                              
+                    <v-container>    
+                        
+                        <!-- <v-layout>
+                            <v-btn color="primary" round @click="openFile">
+                               <v-icon left>mdi-camera</v-icon>                             
+                               Ganti Foto Profil
+                            </v-btn>
+                            <v-file-input
+                                ref="fileInput"
+                                v-model="img"
+                                accept="image/*" 
+                                class="d-none"
+                                v-on:change="imageChanged(img)">                        
+                            </v-file-input> 
+                        </v-layout>
+                             -->
+                                          
                         <v-file-input
+                        color="primary"
                             v-model="img"
                             outlined 
+                            prepend-icon="mdi-camera"
                             accept="image/*" 
                             label="Ganti Foto Profil"
                             v-on:change="imageChanged(img)">                        
@@ -68,6 +89,7 @@
                             ></v-date-picker>
                         </v-menu>
                         
+<<<<<<< Updated upstream
                         <v-row class="ml-4">
                             <v-icon >mdi-gender-male-female</v-icon>
                             Jenis Kelamin
@@ -79,18 +101,44 @@
                         >
                             <v-radio
                                 
+=======
+                        <v-row align="start ml-0" >
+                            <v-icon>mdi-gender-male-female</v-icon>
+                            Jenis Kelamin
+                        </v-row>
+                        <v-radio-group
+                        class="ml-6"
+                            v-model="form.jk"                          
+                            row
+                        >
+                            <v-radio                             
+>>>>>>> Stashed changes
                                 label="Pria"
                                 value="pria"
                             >
                             </v-radio>
+<<<<<<< Updated upstream
                             <v-radio
                              
+=======
+                            <v-radio                           
+>>>>>>> Stashed changes
                                 label="Wanita"
                                 value="wanita"
                             ></v-radio>
                         </v-radio-group>
 
+<<<<<<< Updated upstream
                         
+=======
+                        <!-- <v-text-field
+                            v-model="form.jk"
+                            label="Jenis Kelamin"
+                            outlined
+                            required
+                            prepend-icon="mdi-gender-male-female">
+                        </v-text-field> -->
+>>>>>>> Stashed changes
 
                     </v-container>
                 </v-card-text>
@@ -134,6 +182,7 @@
         },
 
         methods: {
+            
             setDate(date){
                 this.$refs.menu.save(date)
             },
@@ -215,4 +264,11 @@
     .napbar {
         background-color: black;
     }
+    .rounded-card {
+        border-radius: 50% !important; 
+        min-height: 300px;
+        min-width: 300px; 
+        padding: 20px;
+    }
+
 </style>
