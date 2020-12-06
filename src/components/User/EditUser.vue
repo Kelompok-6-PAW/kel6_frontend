@@ -89,19 +89,6 @@
                             ></v-date-picker>
                         </v-menu>
                         
-<<<<<<< Updated upstream
-                        <v-row class="ml-4">
-                            <v-icon >mdi-gender-male-female</v-icon>
-                            Jenis Kelamin
-                        </v-row>
-
-                        <v-radio-group
-                            v-model="form.jk"                 
-                            row
-                        >
-                            <v-radio
-                                
-=======
                         <v-row align="start ml-0" >
                             <v-icon>mdi-gender-male-female</v-icon>
                             Jenis Kelamin
@@ -112,33 +99,17 @@
                             row
                         >
                             <v-radio                             
->>>>>>> Stashed changes
                                 label="Pria"
                                 value="pria"
                             >
                             </v-radio>
-<<<<<<< Updated upstream
-                            <v-radio
-                             
-=======
                             <v-radio                           
->>>>>>> Stashed changes
                                 label="Wanita"
                                 value="wanita"
                             ></v-radio>
                         </v-radio-group>
 
-<<<<<<< Updated upstream
                         
-=======
-                        <!-- <v-text-field
-                            v-model="form.jk"
-                            label="Jenis Kelamin"
-                            outlined
-                            required
-                            prepend-icon="mdi-gender-male-female">
-                        </v-text-field> -->
->>>>>>> Stashed changes
 
                     </v-container>
                 </v-card-text>
