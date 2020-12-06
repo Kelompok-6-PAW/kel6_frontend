@@ -2,7 +2,7 @@
     <v-main class="List">
         <div>
             <b-navbar toggleable="lg" type="dark" class="napbar">
-                <b-navbar-brand href="#"><img src="@/assets/couponic.png" width="100" alt=""></b-navbar-brand>
+                <b-navbar-brand href="/tambahnominal"><img src="@/assets/couponic.png" width="100" alt=""></b-navbar-brand>
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto mr-7 font-weight-medium">
@@ -10,7 +10,7 @@
                     <b-nav-item href="/daftartransaksitopup">Daftar Transaksi Topup</b-nav-item>
                     <b-nav-item href="/daftartransaksiberlangganan">Daftar Transaksi Berlangganan</b-nav-item>
                     
-                    <b-nav-item href="/">
+                    <b-nav-item href="/profiladmin">
                         <v-icon color="#E2EA8D">mdi-account-circle</v-icon> 
                          {{ userNow.username }}
                     </b-nav-item>
@@ -25,8 +25,10 @@
     </v-main>
 </template>        
  <script>
+
 import DaftarTransaksiBerlanggananVue from './DaftarTransaksiBerlangganan.vue';
 import DaftarTransaksiTopupVue from './DaftarTransaksiTopup.vue';
+import EditAdminVue from './EditAdmin.vue';
 import TambahNominalVue from './TambahNominal.vue';
 export default {
     name: "Dashboard",
@@ -37,7 +39,10 @@ export default {
             routes : [
                 { path: '/tambahnominal', component: TambahNominalVue },
                 { path: '/daftartransaksitopup', component: DaftarTransaksiTopupVue },
-                { path: '/daftartransaksiberlangganan', component: DaftarTransaksiBerlanggananVue }
+                { path: '/daftartransaksiberlangganan', component: DaftarTransaksiBerlanggananVue },
+                { path: '/profiladmin', component: EditAdminVue },
+                
+
             
             ],
         }; 

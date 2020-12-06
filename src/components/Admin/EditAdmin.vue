@@ -72,9 +72,9 @@
                             <v-icon >mdi-gender-male-female</v-icon>
                             Jenis Kelamin
                         </v-row>
-
                         <v-radio-group
-                            v-model="form.jk"                 
+                            class="ml-4"
+                            v-model="form.jk"
                             row
                         >
                             <v-radio

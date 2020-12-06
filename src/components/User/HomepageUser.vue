@@ -2,7 +2,7 @@
     <v-main class="List">
         <div>
             <b-navbar toggleable="lg" type="dark" class="napbar">
-                <b-navbar-brand href="#"><img src="@/assets/couponic.png" width="100" alt=""></b-navbar-brand>
+                <b-navbar-brand href="/awaluser"><img src="@/assets/couponic.png" width="100" alt=""></b-navbar-brand>
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto mr-7 font-weight-medium">
@@ -21,7 +21,7 @@
             </b-navbar>
         </div>
         
-        <div class=" lighten-4 fullheight pa-5">
+        <div class=" lighten-4 fullheight">
             <router-view></router-view>
         </div>
     </v-main>

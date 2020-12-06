@@ -39,6 +39,12 @@ const router = new VueRouter({
                 meta: {title: 'Tentang Kami'},
                 component: importComponent('User/TentangKami'),
             },
+            {
+                path: "/awaluser",
+                name: "awaluser",
+                meta: {title: 'Home User'},
+                component: importComponent('User/AwalUser'),
+            },
         ]
     },
     //ADMIN
@@ -67,15 +73,35 @@ const router = new VueRouter({
                 meta: {title: 'Tambah Nominal Top Up'},
                 component: importComponent('Admin/DaftarTransaksiBerlangganan'),
             },   
+            {
+                path: "/profiladmin",
+                name: "profiladmin",
+                meta: {title: 'Profil Admin'},
+                component: importComponent('Admin/EditAdmin'),
+            },
         ]
     },
     
     // HOMEPAGELOGINREGISTER
     {
         path: "/",
-        name: "homepage",
+        name: "homepagelayout",
         meta: {title: 'Couponic'},
-        component: importComponent('Homepage'),
+        component: importComponent('HomepageLayout'),
+        children:[
+            {
+                path: "/tentangkamiawal",
+                name: "tentangkamiawal",
+                meta: {title: 'Tentang Kami'},
+                component: importComponent('User/TentangKami'),
+            },
+            {
+                path: "/homepage",
+                name: "homepage",
+                meta: {title: 'Homepage'},
+                component: importComponent('Homepage'),
+            },
+        ]
     },
 
     {
@@ -86,7 +112,9 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to,from,next)=>{
-    if (to.name != 'homepage' && localStorage.getItem('token')=='') {
+    if(to.name == 'tentangkamiawal'){
+        next()
+    }else if (to.name != 'homepage' && localStorage.getItem('token')=='') {
         next({ path:'/homepage' })
         document.title = to.meta.title
     }

@@ -1,7 +1,7 @@
 <template>
     <v-main class="Home">
+        
        
-
             <b-carousel
             id="carousel-1"
             v-model="slide"
@@ -26,34 +26,53 @@
             <b-carousel-slide img-src="https://www.popsci.com/resizer/0eQsCPRWhjB3PNPxqrtRnPNGxwA=/1200x628/smart/arc-anglerfish-arc2-prod-bonnier.s3.amazonaws.com/public/AUSBJ7SDRWXMD7VXVNJASUT6ME.jpg">
                 <h1>Netflix</h1>
                 <p>See What's Next</p>                
-            </b-carousel-slide>            
+            </b-carousel-slide>                      
 
             </b-carousel>
-            
-       
-
         
+
     </v-main>
-</template>
-
-
+</template>        
+ 
 <script>
-import TentangKamiVue from './User/TentangKami.vue';
 //import image from "./assets/couponic.png"
     export default {
         name: "Home",
         data() {
             return {
-                routes : [
-                { path: '/tentangkamiawal', component: TentangKamiVue }],
+                inputType: 'Tambah',
+                onSlideStart: true,
+                onSlideEnd: false,
+                menu: false,
+                load: false,
+                show3: false,
+                snackbar: false,
+                error_message: '',
+                color: '',                
+                dialog: false,
+                dialogRegister: false,                
+                loginForm: {
+                    email:this.email,
+                    password:this.password,
+                },
             }
-        },
+    },
 
-    }
+        
+        
+    };
 </script>
 
 <style >
     .napbar {
         background-color: black;
+    }
+    .fullscreen{
+        
+        min-width: 100% !important;
+        min-height: 100% !important;
+        left: 0;
+        top: 0;
+        margin: 0 !important;
     }
 </style>
