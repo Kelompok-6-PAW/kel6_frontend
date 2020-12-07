@@ -20,14 +20,20 @@
                 </v-btn>
             </v-card-title>
 
-            <v-data-table :headers="headers" :items="tambahNominals" :search="search">
+            <v-data-table :headers="headers" :items="tambahNominals" :search="search" :items-per-page="5">
                 <template v-slot:[`item.actions`]="{ item }">
-                     <v-btn color="#ff9a76" small class="mr-2" @click="editHandler(item)">
+                    <v-btn color="#ff9a76" v-if="filteredActions(item)" disabled small class="mr-2" @click="editHandler(item)">
                         <v-icon color="white">mdi-pencil-circle</v-icon> 
-                    </v-btn>                    
-                    <v-btn color="#ec5858" small class="mr-2" @click="deleteHandler(item.id)">
+                    </v-btn>
+                    <v-btn color="#ff9a76" v-else small class="mr-2" @click="editHandler(item)">
+                        <v-icon color="white">mdi-pencil-circle</v-icon> 
+                    </v-btn>                                    
+                    <v-btn color="#ec5858" v-if="filteredActions(item)" disabled small class="mr-2" @click="deleteHandler(item.id)">
                         <v-icon color="white">mdi-close-circle</v-icon> 
-                    </v-btn>                                        
+                    </v-btn>
+                    <v-btn color="#ec5858" v-else small class="mr-2" @click="deleteHandler(item.id)">
+                        <v-icon color="white">mdi-close-circle</v-icon> 
+                    </v-btn>                    
                 </template>
                 <template v-slot:[`item.harga`]="{ item }">
                     <span>Rp {{ item.harga }} </span>
@@ -75,7 +81,8 @@
                         <v-text-field
                             v-model="form.topup"
                             label="Top Up"
-                            outlined
+                            outlined                            
+                            :suffix="form.tipe"
                             prepend-icon="mdi-wallet-giftcard"
                             required>
                         </v-text-field>
@@ -144,6 +151,7 @@
         data() {
             return {
                 inputType: 'Tambah',
+                search: null,
                 load: false,
                 snackbar: false,
                 error_message: '',
@@ -195,12 +203,13 @@
                 ],
                 tambahNominal: new FormData,
                 tambahNominals: [],
-                pesanTopUps: [],
+                pesanTopUps: [],                
                 form: {
                     game: null,
                     topup: null,                    
                     harga: null,
-                    stok: null,                    
+                    stok: null,
+                    tipe: null,                    
                 },
                 deleteId: '',
                 editId: '',
@@ -249,7 +258,7 @@
             },
             save() {
                 this.tambahNominal.append('game', this.form.game);
-                this.tambahNominal.append('topup', this.form.topup);                
+                this.tambahNominal.append('topup', this.form.topup + ' ' + this.form.tipe);                
                 this.tambahNominal.append('harga', this.form.harga);
                 this.tambahNominal.append('stok', this.form.stok);                
 
@@ -325,7 +334,7 @@
                     this.load=false;
                 })
             },
-            editHandler(item) {
+            editHandler(item) {                
                 this.inputType = 'Ubah';
                 this.editId = item.id;
                 this.form.game = item.game;
@@ -333,7 +342,7 @@
                 this.form.harga = item.harga;
                 this.form.stok = item.stok;
                 this.filteredImage(item.game);
-                this.dialog = true;
+                this.dialog = true;                               
             },
             deleteHandler(id) {
                 this.deleteId = id;
@@ -356,6 +365,7 @@
                     topup: null,                    
                     harga: null,
                     stok: null, 
+                    tipe: null,
                 };
                 if (this.inputType==='Ubah'){
                     this.initialSelected= [];
@@ -367,11 +377,28 @@
                 var pil = this.dataImagesEdit.filter(img => img.alt === tes)
                 this.initialSelected = pil            
                 this.initialSelected[0].disabled = true                                
-            },  
+            },
+            filteredActions(tes){                                   
+                for (let index = 0; index < this.pesanTopUps.length; index++) {
+                    if (this.pesanTopUps[index].nominal === tes.topup){
+                        if (this.pesanTopUps[index].konfirmasi === 'Belum') {
+                            return true
+                        }  
+                    }                    
+                }
+                return false                             
+            },                        
             onSelectImage: function (data) {
                 console.log('fire event onSelectImage: ', data)
                 this.form.game = data.alt
-                this.form.topup = null                
+                if (data.id === '1')                    
+                    this.form.tipe = 'Diamonds'               
+                else if (data.id === '2')
+                    this.form.tipe = 'UC'
+                else if (data.id === '3')                    
+                    this.form.tipe = 'Points'
+                else
+                    this.form.tipe = null                      
             },                            
         },
         computed: {
@@ -381,8 +408,7 @@
         },
         mounted() {
             this.readData();
-            this.readDataPesanTopUp();
-            this.filteredSelect();
+            this.readDataPesanTopUp();                       
         },
     };
 </script>

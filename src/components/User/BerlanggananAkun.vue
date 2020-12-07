@@ -21,7 +21,7 @@
                 </v-btn>
             </v-card-title>
 
-            <v-data-table :headers="headers" :items="filteredTable()" :search="search">
+            <v-data-table :headers="headers" :items="filteredTable()" :search="search" :items-per-page="5">
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-btn color="#ff9a76" small class="mr-2" @click="editHandler(item)">
                         <v-icon color="white">mdi-pencil-circle</v-icon> 

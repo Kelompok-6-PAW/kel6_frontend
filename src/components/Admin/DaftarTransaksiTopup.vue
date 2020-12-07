@@ -20,7 +20,7 @@
                 </v-btn>
             </v-card-title>
 
-            <v-data-table :headers="headers" :items="pesanTopUps" :search="search">
+            <v-data-table :headers="headers" :items="pesanTopUps" :search="search" :items-per-page="5">
                 <template v-slot:[`item.game`]="{ item }">
                     <v-avatar                                                                
                         size="36px">
@@ -28,7 +28,7 @@
                         <img v-else-if="item.game==='PUBGM'" src="https://www.apkmirror.com/wp-content/uploads/2020/07/43/5f03ed84c1091-384x384.png">
                         <img v-else src="https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com//kaleoz-store/202009/oss-37af9dc791b0866936cbd413950b3697.jpg">
                     </v-avatar>
-                </template>
+                </template>                
             </v-data-table>
         </v-card>
     </div>

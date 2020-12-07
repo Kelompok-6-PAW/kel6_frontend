@@ -20,7 +20,7 @@
                 </v-btn>
             </v-card-title>
 
-            <v-data-table :headers="headers" :items="berlangganans" :search="search">
+            <v-data-table :headers="headers" :items="berlangganans" :search="search" :items-per-page="5">
                 <template v-slot:[`item.aplikasi`]="{ item }">
                     <v-avatar                                                                
                         size="36px">

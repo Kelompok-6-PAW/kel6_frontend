@@ -10,22 +10,7 @@
                           
                
                 <v-card-text>
-                    <v-container>    
-                        
-                        <!-- <v-layout>
-                            <v-btn color="primary" round @click="openFile">
-                               <v-icon left>mdi-camera</v-icon>                             
-                               Ganti Foto Profil
-                            </v-btn>
-                            <v-file-input
-                                ref="fileInput"
-                                v-model="img"
-                                accept="image/*" 
-                                class="d-none"
-                                v-on:change="imageChanged(img)">                        
-                            </v-file-input> 
-                        </v-layout>
-                             -->
+                    <v-container>                                                
                                           
                         <v-file-input
                         color="primary"
@@ -41,6 +26,7 @@
                             v-model="form.email"
                             label="Email"
                             outlined
+                            disabled
                             readonly                            
                             prepend-icon="mdi-email">
                         </v-text-field>
@@ -195,8 +181,9 @@
                     this.color="green"
                     this.snackbar=true;
                     this.load=false;
+                    location.reload();                     
                     this.resetForm();
-                    this.readData();                    
+                    this.readData();                                       
                 }).catch(error => {
                     this.error_message=error.response.data.message;
                     this.color="red"
