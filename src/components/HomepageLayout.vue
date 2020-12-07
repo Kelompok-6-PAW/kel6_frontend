@@ -139,16 +139,17 @@
                             Jenis Kelamin
                         </v-row>
                         <v-radio-group
-                            v-model="regisForm.jenisKelamin"
-                            :rules="rules"
+                        class="ml-8 my-n3 small-radio"
+                            v-model="regisForm.jenisKelamin"                          
                             row
                         >
-                            <v-radio
+                            <v-radio                             
+                             
                                 label="Pria"
                                 value="pria"
                             >
                             </v-radio>
-                            <v-radio
+                            <v-radio                           
                                 label="Wanita"
                                 value="wanita"
                             ></v-radio>
@@ -350,5 +351,10 @@ import TentangKamiVue from './User/TentangKami.vue';
         background-color: black;
     }
     
-    
+    .small-radio label {
+    font-size: 14px;
+    padding-left: 0px;
+    margin-left: -4px;
+    margin-top: 6px;
+    }
 </style>

@@ -24,3 +24,35 @@ new Vue({
   router,
   render: h => h(App),
 }).$mount('#app')
+
+// export default new router({
+//   routes: [
+//     {
+//       path: '/',
+//       redirect: '/homepage'
+//     }
+//   ]
+// })
+
+// export default router
+
+export default new router({
+  mode: 'history',
+  linkActiveClass: 'open active',
+  scrollBehavior: () => ({ y: 0 }),
+  routes: [
+    {
+      path: '/',
+      redirect: '/homepage',
+      name: 'home',
+      component: import (`./components/HomepageLayout.vue`),
+      children: [
+        {
+          path: 'homepage',
+          name: 'homepage',
+          component: import (`./components/Homepage.vue`)
+        },
+      ]
+       
+    }
+]})

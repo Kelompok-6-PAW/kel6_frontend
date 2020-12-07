@@ -56,4 +56,5 @@ import TentangKamiVue from './User/TentangKami.vue';
     .napbar {
         background-color: black;
     }
+    
 </style>

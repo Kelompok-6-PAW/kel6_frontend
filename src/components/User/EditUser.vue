@@ -77,14 +77,18 @@
                         
                         <v-row align="start ml-0" >
                             <v-icon>mdi-gender-male-female</v-icon>
+                            <div class="mx-3">
                             Jenis Kelamin
+
+                            </div>
                         </v-row>
                         <v-radio-group
-                        class="ml-6"
+                        class="ml-6 my-1 small-radio"
                             v-model="form.jk"                          
                             row
                         >
                             <v-radio                             
+                             
                                 label="Pria"
                                 value="pria"
                             >
@@ -228,5 +232,15 @@
         min-width: 300px; 
         padding: 20px;
     }
+
+    
+    .small-radio label {
+    font-size: 14px;
+    padding-left: 0px;
+    margin-left: -4px;
+    margin-top: 6px;
+    }
+    
+    
 
 </style>
