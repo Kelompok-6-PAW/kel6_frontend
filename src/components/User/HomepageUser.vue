@@ -23,6 +23,7 @@
         <div class=" lighten-4 fullheight">
             <router-view></router-view>
         </div>
+        
     </v-main>
 </template>        
  <script>

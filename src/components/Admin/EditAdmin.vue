@@ -4,8 +4,10 @@
 
         <div class="fullheight pa-3 px-10">        
             <v-card class="mx-auto" max-width="544">                
-                <img class="mx-auto" v-if="form.img_user==null" :src="'https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png'" width:200px height:200px>
-                <img class="mx-auto" v-else :src="form.img_user" style="width: 200px; height: 200px">                                
+               
+                    <img  class="mx-auto rounded-card" v-if="form.img_user==null" :src="'https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png'" width:200px height:200px>
+                    <img class="mx-auto rounded-card" v-else :src="form.img_user" style="width: 200px; height: 200px">                                
+                                                    
                 <v-card-text>
                     <v-container>                              
                         <v-file-input
@@ -68,25 +70,27 @@
                             ></v-date-picker>
                         </v-menu>
                         
-                        <v-row class="ml-4">
-                            <v-icon >mdi-gender-male-female</v-icon>
+                        <v-row align="start ml-0" >
+                            <v-icon>mdi-gender-male-female</v-icon>
+                            <div class="mx-3">
                             Jenis Kelamin
+
+                            </div>
                         </v-row>
                         <v-radio-group
-                            class="ml-4"
-                            v-model="form.jk"
+                        class="ml-8 my-1 small-radio"
+                            v-model="form.jk"                          
                             row
                         >
-                            <v-radio
-                                
+                            <v-radio                             
+                             
                                 label="Pria"
-                                value="pria"
+                                value="Pria"
                             >
                             </v-radio>
-                            <v-radio
-                             
+                            <v-radio                           
                                 label="Wanita"
-                                value="wanita"
+                                value="Wanita"
                             ></v-radio>
                         </v-radio-group>
 
@@ -164,7 +168,7 @@
                     img_user: this.form.img_user,                                        
                 }
                 console.log(this.form)
-                var url = this.$api + '/updateuser/'
+                var url = this.$api + '/updateuser'
                 this.load = true
                 this.$http.put(url, newData, {
                     headers: {
@@ -215,4 +219,20 @@
     .napbar {
         background-color: black;
     }
+
+    .rounded-card {
+        border-radius: 50% !important; 
+        min-height: 300px;
+        min-width: 300px; 
+        padding: 20px;
+    }
+
+    
+    .small-radio label {
+    font-size: 14px;
+    padding-left: 0px;
+    margin-left: -4px;
+    margin-top: 6px;
+    }
+    
 </style>

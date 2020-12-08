@@ -21,6 +21,9 @@
         <div class=" lighten-4 fullheight pa-5">
             <router-view></router-view>
         </div>
+        <v-snackbar v-model="snackbar" :color="color" timeout="3000" bottom>
+            {{error_message}}
+        </v-snackbar>
     </v-main>
 </template>        
  <script>

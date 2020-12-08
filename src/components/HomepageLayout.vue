@@ -146,12 +146,12 @@
                             <v-radio                             
                              
                                 label="Pria"
-                                value="pria"
+                                value="Pria"
                             >
                             </v-radio>
                             <v-radio                           
                                 label="Wanita"
-                                value="wanita"
+                                value="Wanita"
                             ></v-radio>
                         </v-radio-group>
                     </v-container>
@@ -168,7 +168,7 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-        <v-snackbar v-model="snackbar" :color="color" timeout="2000" bottom>
+        <v-snackbar v-model="snackbar" :color="color" timeout="3000" bottom>
             {{error_message}}
         </v-snackbar>
 
