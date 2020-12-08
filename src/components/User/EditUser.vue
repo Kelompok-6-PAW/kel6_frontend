@@ -175,7 +175,7 @@
                     img_user: this.form.img_user,                                        
                 }
                 console.log(this.form)
-                var url = this.$api + '/updateuser/'
+                var url = this.$api + '/updateuser'
                 this.load = true
                 this.$http.put(url, newData, {
                     headers: {
@@ -186,8 +186,10 @@
                     this.error_message = response.data.message;
                     this.color="green"
                     this.snackbar=true;
-                    this.load=false;
-                    location.reload();                     
+                    this.load=false;    
+                    this.$router.push({
+                        name: 'profiluser'
+                    })                
                     this.resetForm();
                     this.readData();                                       
                 }).catch(error => {

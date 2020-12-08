@@ -12,12 +12,6 @@
                     single-line
                     hide-details>
                 </v-text-field>
-
-                <v-spacer></v-spacer>
-
-                <v-btn color="error" dark @click="dialog = true">
-                     Cetak PDF
-                </v-btn>
             </v-card-title>
 
             <v-data-table :headers="headers" :items="berlangganans" :search="search" :items-per-page="5">

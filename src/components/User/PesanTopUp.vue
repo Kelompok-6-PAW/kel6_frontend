@@ -248,7 +248,7 @@
                 })
             },
             readDataSelect() {
-                var url = this.$api + '/tambahnominal/'
+                var url = this.$api + '/tambahnominal'
                 this.$http.get(url, {
                      headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')

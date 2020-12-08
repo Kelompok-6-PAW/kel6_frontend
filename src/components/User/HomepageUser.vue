@@ -12,8 +12,7 @@
 
                     <!-- Nanti dibikin profile pake logo sama ada username penggunanya kalo bisa wkwkw-->
                     <b-nav-item @click="hrefprofiluser">
-                        <v-icon color="#E2EA8D">mdi-account-circle</v-icon> 
-                         {{ userNow.username }}
+                        <v-icon color="#E2EA8D">mdi-account-circle</v-icon>
                     </b-nav-item>
                     <b-nav-item @click="logout"><v-icon color="#E2EA8D" >mdi-logout</v-icon></b-nav-item>
                 </b-navbar-nav>
