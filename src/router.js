@@ -63,14 +63,14 @@ const router = new VueRouter({
             },        
             {
                 path: "/daftartransaksitopup",
-                name: "daftarTransaksiTopup",
-                meta: {title: 'Tambah Nominal Top Up'},
+                name: "daftartransaksitopup",
+                meta: {title: 'Daftar Transaksi Topup'},
                 component: importComponent('Admin/DaftarTransaksiTopup'),
             },
             {
                 path: "/daftartransaksiberlangganan",
-                name: "daftartransaksi",
-                meta: {title: 'Tambah Nominal Top Up'},
+                name: "daftartransaksiberlangganan",
+                meta: {title: 'Daftar Transaksi Berlangganan'},
                 component: importComponent('Admin/DaftarTransaksiBerlangganan'),
             },   
             {
@@ -84,7 +84,8 @@ const router = new VueRouter({
     
     // HOMEPAGELOGINREGISTER
     {
-        path: "/",
+        path: "",
+        redirect: '/homepage',
         name: "homepagelayout",
         meta: {title: 'Couponic'},
         component: importComponent('HomepageLayout'),
@@ -104,10 +105,7 @@ const router = new VueRouter({
         ]
     },
 
-    {
-        path: '*',
-        redirect: '/homepage'
-    },
+    
     ],
 });
 

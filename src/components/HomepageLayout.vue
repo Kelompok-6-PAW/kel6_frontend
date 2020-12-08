@@ -2,11 +2,11 @@
     <v-main class="Home">
         <div>
             <b-navbar toggleable="lg" type="dark" class="napbar">
-                <b-navbar-brand href="/homepage"><img src="@/assets/couponic.png" width="100" alt=""></b-navbar-brand>
+                <b-navbar-brand @click="hrefhomepage"><img src="@/assets/couponic.png" width="100" alt=""></b-navbar-brand>
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto mr-7 font-weight-medium">
-                    <b-nav-item href="/tentangkamiawal">Tentang Kami</b-nav-item>
+                    <b-nav-item @click="hreftentangkamiawal">Tentang Kami</b-nav-item>
                     <b-nav-item @click="dialogRegister = true">Daftar</b-nav-item>
                     <b-nav-item @click="dialog = true">Masuk</b-nav-item>
                 </b-navbar-nav>
@@ -327,6 +327,17 @@ import TentangKamiVue from './User/TentangKami.vue';
                     jenisKelamin: '',
                 }
             },
+
+            hrefhomepage(){
+                this.$router.push({
+                name: 'homepage'
+            })
+            },
+            hreftentangkamiawal(){
+                this.$router.push({
+                name: 'tentangkamiawal'
+            })
+            }
             // onSlideStart(slide) {
             //     this.sliding = true
             // },

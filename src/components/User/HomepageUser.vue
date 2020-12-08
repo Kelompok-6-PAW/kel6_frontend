@@ -2,16 +2,16 @@
     <v-main class="List">
         <div>
             <b-navbar toggleable="lg" type="dark" class="napbar">
-                <b-navbar-brand href="/awaluser"><img src="@/assets/couponic.png" width="100" alt=""></b-navbar-brand>
+                <b-navbar-brand @click="hrefawaluser"><img src="@/assets/couponic.png" width="100" alt=""></b-navbar-brand>
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto mr-7 font-weight-medium">
-                    <b-nav-item href="/pesantopup">Pesan Top up</b-nav-item>
-                    <b-nav-item href="/berlanggananakun">Pesan Berlangganan Akun </b-nav-item>
-                    <b-nav-item href="/tentangkami">Tentang Kami</b-nav-item>
+                    <b-nav-item @click="hrefpesantopup" >Pesan Top up</b-nav-item>
+                    <b-nav-item @click="hrefberlanggananakun " >Pesan Berlangganan Akun </b-nav-item>
+                    <b-nav-item @click="hreftentangkami" >Tentang Kami</b-nav-item>
 
                     <!-- Nanti dibikin profile pake logo sama ada username penggunanya kalo bisa wkwkw-->
-                    <b-nav-item href="/profiluser">
+                    <b-nav-item @click="hrefprofiluser">
                         <v-icon color="#E2EA8D">mdi-account-circle</v-icon> 
                          {{ userNow.username }}
                     </b-nav-item>
@@ -70,7 +70,38 @@ export default {
                     console.log(response)
                     this.userNow = response.data.user                    
                 })
-        },    
+        },  
+        hrefpesantopup(){
+            this.$router.push({
+            name: 'pesantopup'
+            })             
+        },
+
+        hrefberlanggananakun(){
+            this.$router.push({
+            name: 'berlanggananakun'
+            })             
+        },
+
+        hreftentangkami(){
+            this.$router.push({
+            name: 'tentangkami'
+            })             
+        },
+
+        hrefprofiluser(){
+            this.$router.push({
+            name: 'profiluser'
+            })             
+        },
+
+        hrefawaluser(){
+            this.$router.push({
+            name: 'awaluser'
+            })             
+        },
+        
+
     },
     mounted() {
             this.readData();

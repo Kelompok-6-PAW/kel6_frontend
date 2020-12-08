@@ -2,15 +2,15 @@
     <v-main class="List">
         <div>
             <b-navbar toggleable="lg" type="dark" class="napbar">
-                <b-navbar-brand href="/tambahnominal"><img src="@/assets/couponic.png" width="100" alt=""></b-navbar-brand>
+                <b-navbar-brand @click="hreftambahnominal"><img src="@/assets/couponic.png" width="100" alt=""></b-navbar-brand>
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto mr-7 font-weight-medium">
-                    <b-nav-item href="/tambahnominal">Daftar Nominal Top up</b-nav-item>
-                    <b-nav-item href="/daftartransaksitopup">Daftar Transaksi Topup</b-nav-item>
-                    <b-nav-item href="/daftartransaksiberlangganan">Daftar Transaksi Berlangganan</b-nav-item>
+                    <b-nav-item @click="hreftambahnominal" >Daftar Nominal Top up</b-nav-item>
+                    <b-nav-item @click="hrefdaftartransaksitopup" >Daftar Transaksi Topup</b-nav-item>
+                    <b-nav-item @click="hrefdaftartransaksiberlangganan">Daftar Transaksi Berlangganan</b-nav-item>
                     
-                    <b-nav-item href="/profiladmin">
+                    <b-nav-item @click="hrefprofiladmin">
                         <v-icon color="#E2EA8D">mdi-account-circle</v-icon> 
                          {{ userNow.username }}
                     </b-nav-item>
@@ -66,7 +66,30 @@ export default {
                     console.log(response)
                     this.userNow = response.data.user                    
                 })
-        },    
+        },   
+        hreftambahnominal(){
+            this.$router.push({
+            name: 'tambahnominal'
+            })             
+        },
+
+        hrefdaftartransaksitopup(){
+            this.$router.push({
+            name: 'daftartransaksitopup'
+            })             
+        },
+
+        hrefdaftartransaksiberlangganan(){
+            this.$router.push({
+            name: 'daftartransaksiberlangganan'
+            })             
+        },
+
+        hrefprofiladmin(){
+            this.$router.push({
+            name: 'profiladmin'
+            })             
+        }, 
     },
     mounted() {
             this.readData();

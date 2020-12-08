@@ -151,6 +151,7 @@
                 var url = this.$api + '/detailuser'
                 this.$http.get(url, {
                     headers: {
+                        
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
                     }
                 }).then(response => {
@@ -178,6 +179,7 @@
                 this.load = true
                 this.$http.put(url, newData, {
                     headers: {
+                        
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
                     }
                 }).then(response => {
